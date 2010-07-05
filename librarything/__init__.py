@@ -3,7 +3,7 @@ import logging, urllib2
 
 from django.conf import settings
 
-from bookworm.library.epub import constants
+from socialbooks.library.epub import constants
 
 API = 'http://www.librarything.com/api'
 COVERS_API = 'http://covers.librarything.com/devkey/%s/medium/isbn' % settings.LIBRARYTHING_KEY
