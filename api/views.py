@@ -8,7 +8,7 @@ from django.core.urlresolvers import reverse
 from socialbooks.library import models 
 from socialbooks.library.views import download_epub, add_by_url_field, add_data_to_document
 from socialbooks.api import HttpResponseCreated, SocialbooksHttpResponseNotAcceptable 
-from socialbooks.gapi.forms import APIUploadForm
+from socialbooks.api.forms import APIUploadForm
 
 @never_cache
 @login_required
