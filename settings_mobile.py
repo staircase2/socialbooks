@@ -12,6 +12,6 @@ TEMPLATE_DIRS = (
 TEMPLATE_DIRS += TEMPLATE_DIRS_BASE
 
 MOBILE = True
-CACHE_BACKEND = 'file:///tmp/bookworm/django_cache_mobile'
+CACHE_BACKEND = 'file:///tmp/socialbooks/django_cache_mobile'
 DATE_FORMAT = "M j y"
-SESSION_COOKIE_NAME = 'bookworm_mobile'
+SESSION_COOKIE_NAME = 'socialbooks_mobile'
