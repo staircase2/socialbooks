@@ -1,7 +1,7 @@
 import logging
 from django.conf import settings
 from django.http import HttpResponsePermanentRedirect
-from bookworm.library.models import UserPref
+from socialbooks.library.models import UserPref
 
 log = logging.getLogger('middleware')
 
