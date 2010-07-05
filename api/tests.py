@@ -23,9 +23,9 @@ from django.conf import settings
 # SECURE_HOSTNAME = HOSTNAME
 
 
-from bookworm.api import models
-from bookworm.library import models as library_models
-from bookworm.library import test_helper as helper
+from socialbools.api import models
+from socialbooks.library import models as library_models
+from socialbooks.library import test_helper as helper
 
 # Expected failure code for published endpoints
 UNAUTHED_STATUS_CODE_PUBLISHED = 403
@@ -258,7 +258,7 @@ class Tests(TestCase):
 
     def test_api_key_change_on_username_web(self):
         '''The user's API key should visibly change on the web site after updating their username from the web'''
-        pass # There's no method to change a username on Bookworm via the web API
+        pass # There's no method to change a username on SocialBooks via the web API
 
     def test_api_fail_anon(self):
         '''An anonymous user should not be able to log in to the API without an API key'''
@@ -478,7 +478,7 @@ class Tests(TestCase):
         response = self.client.get('/api/documents/', { 'api_key': self.userpref.get_api_key()})
         assert 'Sense and Sensibility' in response.content
         
-        # Check that it's in their Bookworm site library too
+        # Check that it's in their SocialBooks site library too
         self._login()
         response = self.client.get('/library/')
         assert 'Sense and Sensibility' in response.content
@@ -497,7 +497,7 @@ class Tests(TestCase):
         response = self.client.get('/api/documents/', { 'api_key': self.userpref.get_api_key()})
         assert 'Pride and Prejudice' in response.content
 
-        # Check that it's in their Bookworm site library too
+        # Check that it's in their SocialBooks site library too
         self._login()
         response = self.client.get('/library/')
         assert 'Pride and Prejudice' in response.content

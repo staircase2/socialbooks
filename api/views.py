@@ -7,7 +7,7 @@ from django.core.urlresolvers import reverse
 
 from socialbooks.library import models 
 from socialbooks.library.views import download_epub, add_by_url_field, add_data_to_document
-from socialbooks.api import HttpResponseCreated, BookwormHttpResponseNotAcceptable 
+from socialbooks.api import HttpResponseCreated, SocialbooksHttpResponseNotAcceptable 
 from socialbooks.gapi.forms import APIUploadForm
 
 @never_cache
@@ -36,16 +36,16 @@ def main(request, SSL=True):
                 resp = add_data_to_document(request, document, open(temp_file), form, redirect_success_to_page=False)
                 
             else:
-                return BookwormHttpResponseNotAcceptable('You did not provide a correctly-formatted epub_data parameter: %s' % form.errors) 
+                return SocialbooksHttpResponseNotAcceptable('You did not provide a correctly-formatted epub_data parameter: %s' % form.errors) 
         else:
-            return BookwormHttpResponseNotAcceptable("You must either include epub_url or epub_data in your request")
+            return SocialbooksHttpResponseNotAcceptable("You must either include epub_url or epub_data in your request")
 
         if isinstance(resp, models.EpubArchive):
             # This was a successful add and we got back a document
             return HttpResponseCreated("%s%s" % (settings.SECURE_HOSTNAME, reverse('api_download', args=[resp.id])))
 
         # Otherwise this was an error condition
-        return BookwormHttpResponseNotAcceptable(resp) # Include the complete Bookworm response
+        return SocialbooksHttpResponseNotAcceptable(resp) # Include the complete Socialbooks response
 
     else:
         return HttpResponseNotAllowed('GET, POST')

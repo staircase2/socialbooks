@@ -10,8 +10,8 @@ import logging
 from django.conf import settings
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, get_host
 from django.contrib.auth import login, authenticate
-from bookworm.api import APIException, BookwormHttpResponseForbidden, BookwormHttpResponseNotFound
-from bookworm.api.models import APIKey
+from socialbooks.api import APIException, SocialbooksHttpResponseForbidden, SocialbooksHttpResponseNotFound
+from socialbooks.api.models import APIKey
 
 log = logging.getLogger(__name__)
 
@@ -30,7 +30,7 @@ class APIKeyCheck(object):
 
     def process_exception(self, request, exception):
         if isinstance(exception, APIException):
-            return BookwormHttpResponseForbidden(exception.message)
+            return SocialbooksHttpResponseForbidden(exception.message)
 
     def check_key(self, request, response_type='forbidden'):
         '''Checks the api_key value in the request. If response_type == 'forbidden',
@@ -41,16 +41,16 @@ class APIKeyCheck(object):
             apikey = request.POST[settings.API_FIELD_NAME]
         else:
             if response_type == 'forbidden':
-                return BookwormHttpResponseForbidden("api_key was not found in request parameters")
+                return SocialbooksHttpResponseForbidden("api_key was not found in request parameters")
             else:
-                return BookwormHttpResponseNotFound()
+                return SocialbooksHttpResponseNotFound()
         try:
             user = APIKey.objects.user_for_key(apikey)
         except APIException, e:
             if response_type == 'forbidden':
-                return BookwormHttpResponseForbidden(e.message)                
+                return SocialbooksHttpResponseForbidden(e.message)                
             else:
-                return BookwormHttpResponseNotFound()
+                return SocialbooksHttpResponseNotFound()
         user.backend = "django.contrib.auth.backends.ModelBackend"
         login(request, user)
         return None

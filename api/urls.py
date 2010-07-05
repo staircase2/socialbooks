@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
-urlpatterns = patterns('bookworm.api.views',
+urlpatterns = patterns('socialbooks.api.views',
                        url(r'^documents/$', 'main', {'SSL':True}, name="main"),
                        url(r'^documents/(?P<epub_id>\d+)/$', 'api_download', {'SSL':True}, name="api_download"),
 )

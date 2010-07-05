@@ -7,8 +7,8 @@ import django.db.models.signals as signals
 from django.http import HttpResponse
 from django.core.urlresolvers import reverse
 
-from bookworm.library import models as bookworm_models
-from bookworm.api import APIException
+from socialbooks.library import models as socialbooks_models
+from socialbooks.api import APIException
 
 log = logging.getLogger(__name__)
 
@@ -52,7 +52,7 @@ class APIKeyManager(models.Manager):
         return apikey.user
         
        
-class APIKey(bookworm_models.BookwormModel):
+class APIKey(socialbooks_models.SocialbooksModel):
     '''Stores the user's current API key'''
     user = models.ForeignKey(User, unique=True)
     key = models.CharField(max_length=32, unique=True)

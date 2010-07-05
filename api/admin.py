@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from bookworm.api import models
+from socialbooks.api import models
 
 class APIKeyAdmin(admin.ModelAdmin):
     pass
