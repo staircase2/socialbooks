@@ -1,16 +1,16 @@
 import logging, os, sys, uuid
 
 from django.core.management import setup_environ
-import bookworm.settings
-setup_environ(bookworm.settings)
+import socialbooks.settings
+setup_environ(socialbooks.settings)
 
 from django.contrib.auth.models import User
 
-import bookworm.search.constants as constants
-from bookworm.search import epubindexer
-from bookworm.library.models import HTMLFile, EpubArchive
-from bookworm.library.epub import InvalidEpubException
-import bookworm.library.epub.toc as util
+import socialbooks.search.constants as constants
+from socialbooks.search import epubindexer
+from socialbooks.library.models import HTMLFile, EpubArchive
+from socialbooks.library.epub import InvalidEpubException
+import socialbooks.library.epub.toc as util
 
 log = logging.getLogger('update-meta')
 log.setLevel(logging.DEBUG)
@@ -32,7 +32,7 @@ def index():
         try:
             util.xml_from_string(e.opf)
         except InvalidEpubException:
-            log.debug("Will delete %s (Bookworm ID %s)" % (e.title, e.id))
+            log.debug("Will delete %s (SocialBooks ID %s)" % (e.title, e.id))
             to_delete.append(e)
             continue
             

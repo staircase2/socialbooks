@@ -5,10 +5,10 @@ from django.http import HttpResponse
 from django.views.generic.simple import direct_to_template
 from django.core.paginator import Paginator
 
-import bookworm.search.epubindexer as epubindexer
-import bookworm.search.constants as constants
-from bookworm.search.forms import EpubSearchForm
-from bookworm.library.models import HTMLFile
+import socialbooks.search.epubindexer as epubindexer
+import socialbooks.search.constants as constants
+from socialbooks.search.forms import EpubSearchForm
+from socialbooks.library.models import HTMLFile
 
 log = logging.getLogger('search.views')
 

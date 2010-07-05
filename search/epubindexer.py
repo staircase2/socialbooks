@@ -1,10 +1,10 @@
 from lxml.html.soupparser import fromstring
 import logging
 from django.core.management import setup_environ
-import bookworm.settings
-setup_environ(bookworm.settings)
+import socialbooks.settings
+setup_environ(socialbooks.settings)
  
-import bookworm.search.constants as constants
+import socialbooks.search.constants as constants
 
 logging.basicConfig(level=logging.DEBUG)
 log = logging.getLogger('search.epubindexer')

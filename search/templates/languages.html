@@ -3,9 +3,9 @@
 <link rel="stylesheet" href="/static/about.css"></link>
 {% endblock head %}
 
-{% block header %}Language support in Bookworm{% endblock header %}
+{% block header %}Language support in SocialBooks{% endblock header %}
 
-{% block title %}Language support in Bookworm{% endblock %}
+{% block title %}Language support in SocialBooks{% endblock %}
 {% block leftnav %}
 {% include "includes/about.html" %}
 {% endblock %}
@@ -13,13 +13,13 @@
 {% block main %}
 
 <p id="bw-about-description">
-  The ePub standard is language-neutral and Bookworm is too.  
-  Bookworm search supports advanced full-text features in 
+  The ePub standard is language-neutral and SocialBooks is too.  
+  SocialBooks search supports advanced full-text features in 
   multiple languages.</p>
 
 <h3>Stemming</h3>
 <p>
-  Bookworm's full-text search feature supports an advanced feature known
+  SocialBooks's full-text search feature supports an advanced feature known
   as <em>stemming</em>.  Most European languages indicate part-of-speech by modifying
   words with prefixes or (more commonly) suffixes.  <strong>Stemming is the process of
   reducing all possible parts of speech for a word to a single root, or <em>stem</em>.</strong>
@@ -47,7 +47,7 @@
 </p>
 <p>
   For example, if I set my stemmer to be English and search for 'spaghetti',
-  Bookworm will also search for 'spaghettis', 'spaghetting', 'spaghettied', etc.
+  SocialBooks will also search for 'spaghettis', 'spaghetting', 'spaghettied', etc.
   (Stemmers don't know whether a given stem makes sense; they operate just on the
   spelling.)  However, if I change my language setting to Italian, then 'spaghetti'
   will stem to 'spaghett' (because –i is a plural marker in Italian, the 
@@ -67,9 +67,9 @@
 
 <h3>Languages with stemmers</h3>
 <p>
-  Bookworm uses the <a href="http://xapian.org">Xapian</a> search engine, which in turn uses the 
+  SocialBooks uses the <a href="http://xapian.org">Xapian</a> search engine, which in turn uses the 
   <a href="http://xapian.org/docs/stemming.html">Snowball Stemming Algorithms</a>.
-  All of the stemmers in Xapian are available for use in Bookworm:
+  All of the stemmers in Xapian are available for use in SocialBooks:
   <ul>
   {% for lang in LANGUAGES %}
     <li> {{ lang.1 }} </li>

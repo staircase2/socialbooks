@@ -1,8 +1,8 @@
 import logging
 from django.conf import settings
 
-from bookworm.search.forms import EpubSearchForm
-from bookworm.library.models import EpubArchive
+from socialbooks.search.forms import EpubSearchForm
+from socialbooks.library.models import EpubArchive
 
 
 log = logging.getLogger('context_processors')
