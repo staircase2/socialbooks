@@ -46,7 +46,7 @@ from django.utils.http import urlquote_plus
 from django.core.mail import send_mail
 from django.views.decorators.cache import cache_page, cache_control, never_cache
 
-from bookworm.library.models import UserPref
+from socialbooks.library.models import UserPref
 
 from openid.consumer.consumer import Consumer, \
     SUCCESS, CANCEL, FAILURE, SETUP_NEEDED
@@ -527,7 +527,7 @@ def changepw(request):
             user_.save()
             msg = _("Password changed.") 
             redirect = "%s?msg=%s" % (
-                    reverse('bookworm.library.views.profile'),
+                    reverse('socialbooks.library.views.profile'),
                     urlquote_plus(msg))
             return HttpResponseRedirect(redirect)
     else:
@@ -559,7 +559,7 @@ def changeemail(request):
                 user_.email = form.cleaned_data['email']
                 user_.save()
                 msg = _("Email changed.") 
-                redirect = "%s?msg=%s" % (reverse('bookworm.library.views.profile'),
+                redirect = "%s?msg=%s" % (reverse('socialbooks.library.views.profile'),
                                       urlquote_plus(msg))
                 return HttpResponseRedirect(redirect)
             else:
@@ -684,7 +684,7 @@ def changeopenid_success(request, identity_url, openid_response):
 
     msg = _("This OpenID is now associated with your account.") 
     redirect = "%s?msg=%s" % (
-            reverse('bookworm.library.views.profile'), 
+            reverse('socialbooks.library.views.profile'), 
             urlquote_plus(msg))
     return HttpResponseRedirect(redirect)
     

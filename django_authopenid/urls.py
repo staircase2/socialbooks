@@ -19,6 +19,6 @@ urlpatterns = patterns('django_authopenid.views',
                        url(r'^%s$' % 'delete/', 'delete', name='user_delete'),
 )
 
-urlpatterns += patterns('bookworm.library.views',
+urlpatterns += patterns('socialbooks.library.views',
                         url(r'^$', 'profile', name='profile'),
 )
