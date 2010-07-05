@@ -9,12 +9,12 @@ from django.conf import settings
 from django.http import HttpResponseNotFound
 from django.core import mail
 
-from bookworm.search import epubindexer, index
-from bookworm.library.models import *
-from bookworm.library.testmodels import *
-from bookworm.library.epub.toc import TOC
-from bookworm.library.epub.constants import *
-from bookworm.library.tests import TestModels as TestLibraryModels
+from socialbooks.search import epubindexer, index
+from socialbooks.library.models import *
+from socialbooks.library.testmodels import *
+from socialbooks.library.epub.toc import TOC
+from socialbooks.library.epub.constants import *
+from socialbooks.library.tests import TestModels as TestLibraryModels
 
 from twill import get_browser
 from twill.errors import TwillAssertionError
