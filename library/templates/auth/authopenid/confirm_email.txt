@@ -1,5 +1,5 @@
 {% load i18n %}
-{% trans "Thank you for registering with Bookworm." %}
+{% trans "Thank you for registering with SocialBooks." %}
 
 {% trans "Your account details are" %}:
 

@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from bookworm.library.models import EpubArchive, HTMLFile,StylesheetFile, ImageFile, UserPref, EpubPublisher, Subject, UserArchive
+from socialbooks.library.models import EpubArchive, HTMLFile,StylesheetFile, ImageFile, UserPref, EpubPublisher, Subject, UserArchive
 
 
 class UserArchiveInline(admin.TabularInline):

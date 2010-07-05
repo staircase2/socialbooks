@@ -18,12 +18,12 @@ from django.conf import settings
 from django.core.urlresolvers import reverse
 from django.core.files.storage import Storage
 
-from bookworm.library.epub import constants, InvalidEpubException
-from bookworm.library.epub.constants import ENC, BW_BOOK_CLASS, STYLESHEET_MIMETYPE, XHTML_MIMETYPE, DTBOOK_MIMETYPE
-from bookworm.library.epub.constants import NAMESPACES as NS
-from bookworm.library.epub.toc import NavPoint, TOC
-from bookworm.search import epubindexer
-import bookworm.library.epub.toc as util
+from socialbooks.library.epub import constants, InvalidEpubException
+from socialbooks.library.epub.constants import ENC, BW_BOOK_CLASS, STYLESHEET_MIMETYPE, XHTML_MIMETYPE, DTBOOK_MIMETYPE
+from socialbooks.library.epub.constants import NAMESPACES as NS
+from socialbooks.library.epub.toc import NavPoint, TOC
+from socialbooks.search import epubindexer
+import socialbooks.library.epub.toc as util
 
 log = logging.getLogger('library.models')
 
@@ -51,7 +51,7 @@ def get_file_by_item(item, document) :
             return image[0]
     return None
     
-class BookwormModel(models.Model):
+class SocialbooksModel(models.Model):
     '''Base class for all models'''
     created_time = models.DateTimeField('date created', auto_now_add=True)
     last_modified_time = models.DateTimeField('last-modified', auto_now=True, default=datetime.datetime.now())
@@ -63,7 +63,7 @@ class BookwormModel(models.Model):
         '''Backwards compatibility with templates'''
         return self.id
 
-class EpubArchive(BookwormModel):
+class EpubArchive(SocialbooksModel):
     '''Represents an entire epub container'''
 
     name = models.CharField(max_length=2000)
@@ -430,7 +430,7 @@ class EpubArchive(BookwormModel):
             return container.find('.//{%s}rootfile' % NS['container']).get('full-path')
         except AttributeError:
             # We couldn't find the OPF, probably due to a malformed container file
-            raise InvalidEpubException("Bookworm was unable to open this ePub. Check that your META-INF/container.xml file is correct, including XML namespaces")
+            raise InvalidEpubException("Socialbooks was unable to open this ePub. Check that your META-INF/container.xml file is correct, including XML namespaces")
 
     def _get_content_path(self, opf_filename):
         '''Return the content path, which may be a named subdirectory or could be at the root of
@@ -724,7 +724,7 @@ class EpubArchive(BookwormModel):
     def __unicode__(self):
         return u'%s by %s (%s)' % (self.title, self.author, self.name)
 
-class UserArchive(BookwormModel):
+class UserArchive(SocialbooksModel):
     '''Through class for user-epub relationships'''
     archive = models.ForeignKey(EpubArchive, related_name='user_archive')
     user = models.ForeignKey(User, related_name='user_archive')
@@ -734,13 +734,13 @@ class UserArchive(BookwormModel):
     def __unicode__(self):
         return u'%s for %s' % (self.archive.title, self.user.username)
 
-class BookAuthor(BookwormModel):
+class BookAuthor(SocialbooksModel):
     '''Authors are not normalized as there is no way to guarantee uniqueness across names'''
     name = models.CharField(max_length=2000)
     def __unicode__(self):
         return self.name
 
-class BookwormFile(BookwormModel):
+class SocialbooksFile(SocialbooksModel):
     '''Abstract class that represents a file in the database'''
     idref = models.CharField(max_length=1000)
     file = models.TextField(default='')    
@@ -757,7 +757,7 @@ class BookwormFile(BookwormModel):
     def __unicode__(self):
         return u"%s [%s]" % (self.filename, self.archive.title)
 
-class Subject(BookwormModel):
+class Subject(SocialbooksModel):
     '''Represents a DC:Subject value'''
     name = models.CharField(max_length=255, unique=True, default='', db_index=True)
     is_lcsh = models.BooleanField(default=False)
@@ -766,7 +766,7 @@ class Subject(BookwormModel):
     class Meta:
         ordering = ('name',)
         
-class EpubPublisher(BookwormModel):
+class EpubPublisher(SocialbooksModel):
     '''Represents a publisher'''
     name = models.CharField(max_length=255, default='', db_index=True)
 
@@ -776,13 +776,13 @@ class EpubPublisher(BookwormModel):
     class Meta:
         ordering = ('name',)
 
-class HTMLFileMeta(BookwormModel):
+class HTMLFileMeta(SocialbooksModel):
     '''Extra metadata about an HTML file.'''
     htmlfile = models.ForeignKey('HTMLFile')
     head_extra = models.TextField(null=True,
-                                  help_text='Extra information from the document <head> which should be injected into the Bookworm page at rendering time')
+                                  help_text='Extra information from the document <head> which should be injected into the Socialbooks page at rendering time')
 
-class HTMLFile(BookwormFile):
+class HTMLFile(SocialbooksFile):
     '''Usually an individual page in the ebook.'''
     title = models.CharField(max_length=5000,
                              help_text='The named title of the chapter or file')
@@ -979,7 +979,7 @@ class HTMLFile(BookwormFile):
         ordering = ['order']
         verbose_name_plural = 'HTML Files'
 
-class StylesheetFile(BookwormFile):
+class StylesheetFile(SocialbooksFile):
     '''A CSS stylesheet associated with a given book'''
     content_type = models.CharField(max_length=100, default="text/css")
 
@@ -990,7 +990,7 @@ class StylesheetFile(BookwormFile):
     class Meta:
         verbose_name_plural = 'CSS'
 
-class ImageFile(BookwormFile):
+class ImageFile(SocialbooksFile):
     '''An image file associated with a given book.  Mime-type will vary.'''
     content_type = models.CharField(max_length=100)
     data = None
@@ -1042,7 +1042,7 @@ class ImageFile(BookwormFile):
         return ImageBlob
 
 
-class UserPref(BookwormModel):
+class UserPref(SocialbooksModel):
     '''Per-user preferences for this application'''
     user = models.ForeignKey(User, unique=True)
     fullname = models.CharField(max_length=1000, blank=True) # To ease OpenID integration
@@ -1063,7 +1063,7 @@ class UserPref(BookwormModel):
         return self.user.username
     
     def get_api_key(self):
-        from bookworm.api.models import APIKey
+        from socialbooks.api.models import APIKey
         return smart_str(APIKey.objects.get_or_create(user=self.user)[0].key, 'utf8')
 
 class SystemInfo():
@@ -1089,7 +1089,7 @@ class SystemInfo():
             return int(round(self._total_users, -2))
         return self._total_users
 
-class BinaryBlob(BookwormFile, Storage):
+class BinaryBlob(SocialbooksFile, Storage):
     '''Django doesn't support this natively in the DB model (yet) and quite 
     probably we don't want to store this in the database anyway, for
     possible replacement with an S3-like storage system later.  For now

@@ -9,12 +9,12 @@ from django.conf import settings
 from django.http import HttpResponseNotFound
 from django.core import mail
 
-from bookworm.search import epubindexer, index
-from bookworm.library.models import *
-from bookworm.library.testmodels import *
-from bookworm.library.epub.toc import TOC
-from bookworm.library.epub.constants import *
-from bookworm.library import test_helper as helper
+from socialbooks.search import epubindexer, index
+from socialbooks.library.models import *
+from socialbooks.library.testmodels import *
+from socialbooks.library.epub.toc import TOC
+from socialbooks.library.epub.constants import *
+from socialbooks.library import test_helper as helper
 
 from twill import get_browser
 from twill.errors import TwillAssertionError
@@ -1769,7 +1769,7 @@ class TestViews(DjangoTestCase):
         response = self.client.get('/test-static/about.css')
         assert response.status_code == 200
 
-        response = self.client.get('/test-static/bookworm.js')
+        response = self.client.get('/test-static/socialbooks.js')
         assert response.status_code == 200
 
         response = self.client.get('/static/about.css')
@@ -1848,7 +1848,7 @@ class TestTwill(DjangoTestCase):
     def test_home(self):
         go(self.url)
         url('/')
-        find('Bookworm')
+        find('SocialBooks')
 
     def test_library(self):
         go(self.url)

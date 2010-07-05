@@ -21,10 +21,10 @@ jQuery(document).ready(function() {
   <h2>{% trans "Two ways to join" %}:</h2>
   <ul>
     <li><h3><a href="#openid">{% trans "Use OpenID" %}</a></h3> 
-    {% trans "Just enter your OpenID and we'll link a Bookworm account to it." %}
+    {% trans "Just enter your OpenID and we'll link a SocialBooks account to it." %}
     <a href="{% url openid %}">{% trans "What is OpenID" %}</a>?</li>
     <li><h3>{% trans "Don't have an OpenID?" %}</h3>  
-    {% trans "Sign up with a username and password just for Bookworm. <!-- trans: instead of using OpenID -->" %}
+    {% trans "Sign up with a username and password just for SocialBooks. <!-- trans: instead of using OpenID -->" %}
 
     </li>
   </ul>
@@ -35,7 +35,7 @@ jQuery(document).ready(function() {
 <div id="bw-content">
 <p id="bw-about-description">
 {% blocktrans %}
-  Before you can start reading with Bookworm, you need to sign up so we can
+  Before you can start reading with SocialBooks, you need to sign up so we can
   store your books in your private library.
 {% endblocktrans %}
 </p>
@@ -62,7 +62,7 @@ jQuery(document).ready(function() {
 
     <form action="{{ action }}" method="post" accept-charset="utf-8">	
       <fieldset>
-        <legend>{% trans "Sign up locally <!-- trans: on Bookworm itself rather than via OpenID -->" %}</legend>
+        <legend>{% trans "Sign up locally <!-- trans: on SocialBooks itself rather than via OpenID -->" %}</legend>
 
         <label for="id_username"><br/>{% trans "Username" %}:</label>
 	{{ form.username }}

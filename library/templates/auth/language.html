@@ -6,20 +6,20 @@
 {% block main %}
 
 
-<h2>{% trans "Change your Bookworm language" %}</h2>
+<h2>{% trans "Change your SocialBooks language" %}</h2>
 
 <p>
 {% blocktrans %}
-  Bookworm is available in multiple languages.  To change the language
+  SocialBooks is available in multiple languages.  To change the language
   used when you log in, select from one of the translations listed here.
 {% endblocktrans %}
 </p>
 <p>
-{% blocktrans %}If you don't see your preferred language, <a href="mailto:{{ ADMIN_EMAIL }}">let us know if you're willing to help translate</a>.  Bookworm can be translated into <a href="http://code.djangoproject.com/browser/django/trunk/django/conf/global_settings.py#L43">any of the languages supported by the Django framework</a>.{% endblocktrans %}
+{% blocktrans %}If you don't see your preferred language, <a href="mailto:{{ ADMIN_EMAIL }}">let us know if you're willing to help translate</a>.  SocialBooks can be translated into <a href="http://code.djangoproject.com/browser/django/trunk/django/conf/global_settings.py#L43">any of the languages supported by the Django framework</a>.{% endblocktrans %}
 </p>
 
 <p>
-{% blocktrans %}Information on translating Bookworm is available on <a href="http://labs.oreilly.com/2009/03/how-to-contribute-translations-to-bookworm.html">O'Reilly Labs</a>{% endblocktrans %}
+{% blocktrans %}Information on translating SocialBooks is available on <a href="http://labs.oreilly.com/2009/03/how-to-contribute-translations-to-bookworm.html">O'Reilly Labs</a>{% endblocktrans %}
 </p>
 <form action="/i18n/setlang/" method="post">
   <input name="next" type="hidden" value="{% url profile %}" />

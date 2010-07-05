@@ -2,8 +2,8 @@
 from lxml import etree as ET
 import sys, logging
 
-from bookworm.library.epub.constants import NAMESPACES as NS
-from bookworm.library.epub.constants import ENC
+from socialbooks.library.epub.constants import NAMESPACES as NS
+from socialbooks.library.epub.constants import ENC
 
 from . import InvalidEpubException
 

@@ -22,12 +22,12 @@ from django.views.decorators.vary import vary_on_headers, vary_on_cookie
 
 from django_authopenid.views import signin
 
-from bookworm.library.epub import InvalidEpubException
-from bookworm.library.models import EpubArchive, HTMLFile, StylesheetFile, ImageFile, SystemInfo, get_file_by_item, order_fields, DRMEpubException, UserArchive
-from bookworm.library.forms import EpubValidateForm, ProfileForm
-from bookworm.library.epub import constants as epub_constants
-from bookworm.library.google_books.search import Request
-from bookworm.library.epub import epubcheck
+from socialbooks.library.epub import InvalidEpubException
+from socialbooks.library.models import EpubArchive, HTMLFile, StylesheetFile, ImageFile, SystemInfo, get_file_by_item, order_fields, DRMEpubException, UserArchive
+from socialbooks.library.forms import EpubValidateForm, ProfileForm
+from socialbooks.library.epub import constants as epub_constants
+from socialbooks.library.google_books.search import Request
+from socialbooks.library.epub import epubcheck
 
 log = logging.getLogger('library.views')
 
@@ -188,7 +188,7 @@ def view_chapter(request, title, key, chapter_id, chapter=None, document=None, g
         chapter = None
         stylesheets = None
         message = _('''
-This book contained content that Bookworm couldn't read.  You may need to check with the 
+This book contained content that SocialBooks couldn't read.  You may need to check with the 
 publisher that this is a valid ePub book that contains either XHTML or DTBook-formatted
 content.''')
 
@@ -290,7 +290,7 @@ def delete(request):
     return HttpResponseRedirect(reverse('library'))
 
 def register(request):
-    '''Register a new user on Bookworm'''
+    '''Register a new user on SocialBooks'''
 
     form = UserCreationForm()
                                             
@@ -502,7 +502,7 @@ def add_data_to_document(request, document, data, form, redirect_success_to_page
         # is passed to MySQL. If you get many of these,
         # increase the value of the MySQL config value
         # max_allowed_packet (> 16M recommended).
-        m = _(u"We detected a problem with your ebook that is most likely related to it being too big to display safely in a web browser. This can happen with very large images, or with extremely long chapters. Please check with the publisher that the book has been formatted correctly.  Very large pages would require a lot of scrolling and load very slowly, so they are not allowed to be added to Bookworm.")
+        m = _(u"We detected a problem with your ebook that is most likely related to it being too big to display safely in a web browser. This can happen with very large images, or with extremely long chapters. Please check with the publisher that the book has been formatted correctly.  Very large pages would require a lot of scrolling and load very slowly, so they are not allowed to be added to SocialBooks.")
         return _report_error(request, document, data, m, form, e, email=True)
 
     except DRMEpubException, e:
@@ -512,7 +512,7 @@ def add_data_to_document(request, document, data, form, redirect_success_to_page
 
     except Exception, e:
         # We got some unknown error (usually a malformed epub).  We
-        # want to know about these since they are sometimes actually Bookworm bugs.
+        # want to know about these since they are sometimes actually SocialBooks bugs.
 
         if settings.SKIP_EPUBCHECK:
             return direct_to_template(request, 'upload.html', {'form':form, 
@@ -530,7 +530,7 @@ def add_data_to_document(request, document, data, form, redirect_success_to_page
             error = error[0:200] + u'...'
 
         message = []
-        message.append(_(u"<p class='bw-upload-message'>The file you uploaded looks like an ePub archive, but it has some problems that prevented it from being loaded.  This may be a bug in Bookworm, or it may be a problem with the way the ePub file was created. The complete error message is:</p>"))
+        message.append(_(u"<p class='bw-upload-message'>The file you uploaded looks like an ePub archive, but it has some problems that prevented it from being loaded.  This may be a bug in SocialBooks, or it may be a problem with the way the ePub file was created. The complete error message is:</p>"))
         message.append(_(u"<p class='bw-upload-errors'>%s</p>" % xml_escape(error)))
 
         # Let's see what's wrong with this by asking epubcheck too, since it will let us know if it's our bug
@@ -540,7 +540,7 @@ def add_data_to_document(request, document, data, form, redirect_success_to_page
             # We got nothing useful from the validator (oops)
             pass
         elif len(valid_resp) == 0:
-            message.append(_(u"<p>(epubcheck thinks this file is valid, so this may be a Bookworm error)</p>"))
+            message.append(_(u"<p>(epubcheck thinks this file is valid, so this may be a SocialBooks error)</p>"))
         else:
             e = '\n'.join([i.text for i in valid_resp])
             errors = ['<li>%s</li>' % i.replace('\n', '<br/>')  for i in e.split('ERROR:') if i]
@@ -690,7 +690,7 @@ def _email_errors_to_admin(exception, data, document):
     # Email it to the admins
     message = _exception_message(exception)
 
-    email = EmailMessage(u'[bookworm-error] %s (book=%s)' % (message, document.name),
+    email = EmailMessage(u'[socialbooks-error] %s (book=%s)' % (message, document.name),
                          settings.REPLYTO_EMAIL,
                          settings.ERROR_EMAIL_RECIPIENTS)
     email.attach(document.name, data, epub_constants.MIMETYPE)

@@ -28,16 +28,16 @@ jQuery(document).ready(function() {
 
 {% block header %}
 {% if mobile %} 
-    Bookworm: {{ _("ePub ebook reader") }}
+    SocialBooks: {{ _("ePub ebook reader") }}
 {% else %}
-{% trans "Sign in to Bookworm" %}
+{% trans "Sign in to SocialBooks" %}
 {% endif %}
 
 
 {% endblock header %}
 
 {% block leftnav %}
-<h2>{{ _("New to Bookworm?") }}</h2>
+<h2>{{ _("New to SocialBooks?") }}</h2>
 <ol>
   <li><a href="{% url tour %}">{{ _("Take the tour")}}</a></li>
   <li><a style="font-weight:bold" id="bw-public-register" href="{% url django_authopenid.views.signup %}" name="register">{{ _("Sign up")}}</a>!</li>
@@ -68,7 +68,7 @@ jQuery(document).ready(function() {
     <form name="fauth" action="{{ action }}" method="post" id="bw-username-form">
       {{ form1.next }}
       <fieldset>
-        <legend>{{ _("Sign in using a local Bookworm account") }}</legend>
+        <legend>{{ _("Sign in using a local SocialBooks account") }}</legend>
         <label for="id_username">{{ _("Username") }}</label>{{ form1.username }}
 	<br/>
         <label id="bw-username-password-label" for="id_password">{{ _("Password") }}</label>{{ form1.password }}

@@ -1,6 +1,6 @@
 from django.conf.urls.defaults import patterns, url
 
-urlpatterns = patterns('bookworm.library.views',
+urlpatterns = patterns('socialbooks.library.views',
 
                        # Public, non-authenticated home
                        url(r'^$', 'index', name="index"),                        

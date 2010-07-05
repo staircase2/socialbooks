@@ -1,6 +1,6 @@
 {% extends "base.html" %} 
 {% load i18n %}
-{% load bookworm %}
+{% load socialbooks %}
 {% load librarything_tags %}
 
 {% block title %}{% spaceless %}
@@ -180,7 +180,7 @@
    {% if google_books.entries %}
      <h2>{% trans "Editions of this work found in Google Books Search" %}</h2>
      <a href="http://www.google.com"><img align="left" style="padding-right: 1em" src="http://books.google.com/googlebooks/images/poweredby.png" border="0" style="border: 0"/></a>
-     <p>{% trans "This title and author were found to have the following entries through the use of the Google Books Search service. The information listed here may be inaccurate or incomplete and is not provided by Bookworm." %}
+     <p>{% trans "This title and author were found to have the following entries through the use of the Google Books Search service. The information listed here may be inaccurate or incomplete and is not provided by SocialBooks." %}
      </p>
 
      <table class="bw-meta">
@@ -224,6 +224,6 @@
    <a href="{% url view_first document.safe_title,document.key %}"><h2 class="bw-title">{{ document.title }}</h2></a> 
 &#160;&#160; {% trans "by <!-- trans written by -->" %} {% for a in document.authors.all %}{{ a }}{% if not forloop.last %}, {% endif %}{% endfor %}
 {% url library as libraryurl %}
-{% blocktrans %}on <a href="{{ libraryurl }}">Bookworm</a>{% endblocktrans %}
+{% blocktrans %}on <a href="{{ libraryurl }}">SocialBooks</a>{% endblocktrans %}
 </span>
 {% endblock footer_block %}

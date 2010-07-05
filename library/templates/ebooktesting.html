@@ -4,8 +4,8 @@
 <link rel="stylesheet" type="text/css" href="/static/about.css"></link>
 {% endblock head %}
 
-{% block title %}{% trans "Testing your ePubs with Bookworm" %}{% endblock title %}
-{% block header %}{% trans "For publishers" %} : {% trans "Testing your ePubs with Bookworm" %}{% endblock header %}
+{% block title %}{% trans "Testing your ePubs with Socialbooks" %}{% endblock title %}
+{% block header %}{% trans "For publishers" %} : {% trans "Testing your ePubs with Socialbooks" %}{% endblock header %}
 
 {% block leftnav %}
 
@@ -17,7 +17,7 @@
 
   <p id="bw-about-description">
     {% blocktrans %}
-    Bookworm isn't just for readers.  Publishers can use it to test their ePub files
+    Socialbooks isn't just for readers.  Publishers can use it to test their ePub files
     before distributing them, and to experiment with advanced features such as
     stylesheets and SVG.    
     {% endblocktrans %}
@@ -50,17 +50,17 @@
   </p>
   <p>
     {% blocktrans %}
-    Although Bookworm will accept many kinds of ePubs which are not strictly
+    Although Socialbooks will accept many kinds of ePubs which are not strictly
     valid, it is always best to test them first.  Valid ePubs are much more likely
     to work consistently with new ereaders that are developed in the future.
     {% endblocktrans %}
   </p>
-  <h2>{% trans "How to test ePubs with Bookworm" %}</h2>
+  <h2>{% trans "How to test ePubs with Socialbooks" %}</h2>
   <p>
     {% url django_authopenid.views.signup as signupurl %}
     {% url tour as toururl %}
     {% blocktrans %}
-    Like any other user, all you need to do to test ePubs with Bookworm
+    Like any other user, all you need to do to test ePubs with Socialbooks
     is to <a href="{{ signupurl }}">sign up</a> and
     <a href="{{ toururl }}#step1">add a book</a>.
     {% endblocktrans %}
@@ -93,17 +93,17 @@
     <li> 
       {% blocktrans %}
       <strong>Is the table of contents correct and in the right order?</strong>
-      Bookworm uses the <code>playOrder</code> attribute of the NCX file
+      Socialbooks uses the <code>playOrder</code> attribute of the NCX file
       and the ordering of the items in the TOC.
       {% endblocktrans %}
     </li>
     <li> 
       {% blocktrans %}
       <strong>Are all images appearing?</strong> 
-      Bookworm can accommodate a wide
+      Socialbooks can accommodate a wide
       variety of link forms, from images linked directly from the TOC to
       those found in anchor tags within content. The images <em>must</em> be 
-      listed in the OPF file to appear in Bookworm, as directed by the ePub specification.
+      listed in the OPF file to appear in Socialbooks, as directed by the ePub specification.
       {% endblocktrans %}
 
     </li>
@@ -111,17 +111,17 @@
       {% blocktrans %}
       <strong>Are all special or foreign characters displaying correctly?</strong>
       ePub books complying with the specification must be encoded with
-      either UTF-8 or UTF-16, but Bookworm supports only UTF-8.  (Bidirectional text is supported
+      either UTF-8 or UTF-16, but Socialbooks supports only UTF-8.  (Bidirectional text is supported
            but you will need to include that directive in the CSS.)
       {% endblocktrans %}
     </li>
   </ol>
   </div>
   <a name="secure"></a>
-  <h2>{% trans "Are ePub files on Bookworm secure?" %}</h2>
+  <h2>{% trans "Are ePub files on Socialbooks secure?" %}</h2>
   <p>
     {% blocktrans %}
-    Although Bookworm is designed to prevent file sharing and
+    Although Socialbooks is designed to prevent file sharing and
     accidental release of books into the "wild," we accept no
     liability for software failure which may result in an ebook 
     becoming publicly viewable. 
@@ -129,7 +129,7 @@
   </p>
   <p>
     {% blocktrans %}
-    However, Threepress can arrange for a private version of Bookworm
+    However, Threepress can arrange for a private version of Socialbooks
     to be set up for large-scale testing or especially-sensitive
     material. Contact <a
     href="mailto:{{ ADMIN_EMAIL }}">{{ ADMIN_EMAIL }}</a>

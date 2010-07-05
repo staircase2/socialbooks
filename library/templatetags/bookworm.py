@@ -33,7 +33,7 @@ def show_reload(context, document, user):
 
 @register.simple_tag 
 def date_metadata(document, field):
-    '''Try some common date formats to get display in a Bookworm-style date,
+    '''Try some common date formats to get display in a SocialBooks-style date,
     otherwise give up.'''
     metadata = document._get_metadata(field, document.opf, as_list=True) 
     if not metadata:

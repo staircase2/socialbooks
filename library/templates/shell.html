@@ -3,9 +3,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="{{ current_language }}" lang="{{ current_language }}">
   <head>
     <meta http-equiv="content-type" content="text/html; charset=utf-8" ></meta>    
-    {% spaceless %}<title>{% block title %} {% trans "Bookworm" %} {% endblock title %} : {% trans "Bookworm ePub reader" %}</title>{% endspaceless %}
-    <meta name="Description" content="{% trans "Bookworm is the web-based ereader for ePub ebooks. Bookworm was developed by Liza Daly at threepress.org, a project to expand the reach of open source software in academic and trade publishing." %}" />
-    <meta name="Keywords" content="ebook epub ereader bookworm threepress liza daly open source iphone" />
+    {% spaceless %}<title>{% block title %} {% trans "Socialbooks" %} {% endblock title %} : {% trans "Socialbooks ePub reader" %}</title>{% endspaceless %}
+    <meta name="Description" content="{% trans "Socialbooks is the web-based ereader for ePub ebooks. Socialbooks was developed by Liza Daly at threepress.org, a project to expand the reach of open source software in academic and trade publishing." %}" />
+    <meta name="Keywords" content="ebook epub ereader socialbooks threepress liza daly open source iphone" />
 
     {% block localstyles %}{% endblock localstyles %}
     <link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}base.css"></link>
@@ -30,10 +30,10 @@
     {% endblock orm_header %}
     {% include "host-header.html" %}
 
-    <!-- Bookworm header -->
+    <!-- Socialbooks header -->
     <div id="bw-header">
       <div id="bw-header_logo">
-        <h1 class="bw-logo"><a href="{% url index %}">{{ _("Bookworm")|lower }} </a></h1>
+        <h1 class="bw-logo"><a href="{% url index %}">{{ _("Socialbooks")|lower }} </a></h1>
         <h2 class="bw-motto"><a href="{%  url index %}">{{ _("Online ePub ebook reading") }}</a></h2>
       </div>
       <div id="bw-header_nav">
@@ -46,7 +46,7 @@
             <br />
           {% endif %}
           <a href="http://blog.threepress.org">{% trans "Blog" %}</a>
-          <a href="{% url about %}">{% blocktrans %}About <span class="bw-logo">Bookworm</span>{% endblocktrans %}</a>
+          <a href="{% url about %}">{% blocktrans %}About <span class="bw-logo">Socialbooks</span>{% endblocktrans %}</a>
           <a href="http://threepress.org/about/">{% trans "About Threepress" %}</a>
           <a href="{% url help %}">{% trans "Help" %}</a>
         </p>
@@ -100,7 +100,7 @@
             {% if request.user and request.user.is_authenticated %}
               <p>
                 {% blocktrans with request.user.fullname as ruf and request.user.email as rue %}
-                  From the Bookworm account of {{ ruf }} &lt;{{ rue }}&gt;
+                  From the Socialbooks account of {{ ruf }} &lt;{{ rue }}&gt;
                 {% endblocktrans %}
               </p>
             {% endif %}
@@ -130,7 +130,7 @@
 
      {% endblock footer_block %}
     </div>
-    <script type="text/javascript" src="{{ MEDIA_URL }}bookworm.js" ></script>
+    <script type="text/javascript" src="{{ MEDIA_URL }}socialbooks.js" ></script>
     {% block extra_javascript %}{% endblock extra_javascript %}
 
     {% if not OFFLINE %}

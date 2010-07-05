@@ -1,8 +1,8 @@
 {% extends "base.html" %} 
 {% load i18n %}
-{% block title %}{% trans "Help using Bookworm" %}{% endblock title %}
+{% block title %}{% trans "Help using SocialBooks" %}{% endblock title %}
 
-{% block header %}{% trans "Help using Bookworm" %} {% endblock header %}
+{% block header %}{% trans "Help using SocialBooks" %} {% endblock header %}
 {% block head %}
 <link rel="stylesheet" href="/static/home.css"></link>
 <link rel="stylesheet" href="/static/about.css"></link>
@@ -33,27 +33,27 @@
   <div id="bw-tour-toc">
     <a href="#upload"> {% trans "Problems adding a book?" %}</a>
     ~
-    <a href="#devices"> {% trans "Can I use Bookworm with my e-reader?" %}</a>
+    <a href="#devices"> {% trans "Can I use SocialBooks with my e-reader?" %}</a>
     ~ 
-    <a href="#openid"> {% trans "Do I need an OpenID to use Bookworm?" %}</a>
+    <a href="#openid"> {% trans "Do I need an OpenID to use SocialBooks?" %}</a>
     ~ 
-    <a href="#api"> {% trans "Can I upload all my files at once or access Bookworm without a browser?" %}</a>
+    <a href="#api"> {% trans "Can I upload all my files at once or access SocialBooks without a browser?" %}</a>
     ~ 
     <a href="#additional"> {% trans "More questions" %}</a>
   </div>
 
   <a name="first"></a>
-  <h2>{% trans "What do I do first? <!-- trans: to use Bookworm -->" %}</h2>
+  <h2>{% trans "What do I do first? <!-- trans: to use SocialBooks -->" %}</h2>
   <p>
     {% url tour as toururl %}
     {% blocktrans %}
-    The easiest way to get acquainted with Bookworm is to <a href="{{ toururl }}">take the tour</a>. 
+    The easiest way to get acquainted with SocialBooks is to <a href="{{ toururl }}">take the tour</a>. 
     {% endblocktrans %}
   </p>
   <p>
     {% url about as abouturl %}
     {% blocktrans %}
-    For more information, try reading the <a href="{{ abouturl }}">About</a> page for some background on the goals and strengths of Bookworm.
+    For more information, try reading the <a href="{{ abouturl }}">About</a> page for some background on the goals and strengths of SocialBooks.
     {% endblocktrans %}
   </p>
 
@@ -65,13 +65,13 @@
   <h3>{% trans "Is the book in ‘ePub’ format?" %}</h3>
   <p>
     {% blocktrans %}
-    Bookworm only accepts ePub books.  You'll know an ebook is in ePub format
+    SocialBooks only accepts ePub books.  You'll know an ebook is in ePub format
     if its name ends in <strong>.epub</strong>.  If it doesn't, it's probably 
     a PDF or some other kind of ebook.  Check the website where you got the book
     for help on what software to use when reading it.
     {% endblocktrans %}
   </p>
-  <h3>{% trans "Did Bookworm tell you there was a problem with the book?" %}</h3>
+  <h3>{% trans "Did SocialBooks tell you there was a problem with the book?" %}</h3>
   <p>
     {% trans "You might get an error message like this when you add a book" %}:
   </p>
@@ -82,25 +82,25 @@
   <p>
     {% blocktrans %}
     The ePub format is still  new, and not all ePub books are made 
-    quite right.  Bookworm tries to accept a wide variety of ePubs, but
+    quite right.  SocialBooks tries to accept a wide variety of ePubs, but
     sometimes it can't handle ebooks that are too unusual.
     {% endblocktrans %}
   </p>
  
   <p>
     {% blocktrans %}
-    On the other hand, Bookworm is also new and still has bugs.  When your
-    book was uploaded into Bookworm and a problem was detected, Bookworm contacted
+    On the other hand, SocialBooks is also new and still has bugs.  When your
+    book was uploaded into SocialBooks and a problem was detected, SocialBooks contacted
     an <a href="http://www.threepress.org/document/epub-validate/">ePub validation system</a>,
     which uses a program called ‘epubcheck’ by Adobe.  
-    Bookworm will tell you if epubcheck also thought there was a problem with the ebook.
+    SocialBooks will tell you if epubcheck also thought there was a problem with the ebook.
     If they both agree, it's likely that the publisher didn't make the ePub correctly.
     {% endblocktrans %}
   </p>
   <p>
     {% blocktrans %}
-    Whenever an ePub book fails to get added to the library, the Bookworm
-    developer is notified.  If a bug in Bookworm is found, it's usually fixed in a few days,
+    Whenever an ePub book fails to get added to the library, the SocialBooks
+    developer is notified.  If a bug in SocialBooks is found, it's usually fixed in a few days,
     so check back or email <a href="mailto:{{ ADMIN_EMAIL }}">{{ ADMIN_EMAIL }}</a>
     for a status.
     {% endblocktrans %}
@@ -109,7 +109,7 @@
   <p>
     {% blocktrans %}
     Some ePub books have restrictions that prevent them from being read on 
-    unauthorized devices.  Bookworm does not support any kind of DRM and
+    unauthorized devices.  SocialBooks does not support any kind of DRM and
     the developers feel it is not a sufficient piracy deterrent to warrent
     limiting where you can read.
     {% endblocktrans %}
@@ -123,18 +123,18 @@
   <h3>{% trans "Is the ebook very large, or contain large images?" %}</h3>
   <p>
     {% blocktrans %}
-    Some ebooks are too large to be safely stored and viewed in Bookworm.
+    Some ebooks are too large to be safely stored and viewed in SocialBooks.
     Excessively-large books will be rejected.  An ePub is consider too large if it is 
     over 30 megabytes in size.
     {% endblocktrans %}
   </p>
   <a name="devices"></a>
-  <h2>{% trans "Can I use Bookworm with my e-reader?" %}</h2>
+  <h2>{% trans "Can I use SocialBooks with my e-reader?" %}</h2>
   <p>
     {% blocktrans %}
     Yes, if your e-reader can open ePub books.  In each case you will need to
     download your ebook to your computer and then add it to one of these
-    applications, or use the mobile version of Bookworm with a device
+    applications, or use the mobile version of SocialBooks with a device
     that is online.  
     {% endblocktrans %}
     </p>
@@ -149,7 +149,7 @@
     <tr>
       <th>{% trans "Device <!-- trans: e-reading device, should be short -->" %}</th>
       <th>{% trans "Supports ePub? <!-- trans: Should be short phrase -->" %}</th>
-      <th>{% trans "How-to <!-- trans: How to use Bookworm with this e-reader --> " %}</th>
+      <th>{% trans "How-to <!-- trans: How to use SocialBooks with this e-reader --> " %}</th>
     </tr>
     </thead>
     <tbody>
@@ -163,9 +163,9 @@
         <td><strong>{% trans "Yes" %}</strong></td>
         <td>
           {% blocktrans with MOBILE_HOST as mobilehost %}
-          Use the mobile web version of Bookworm when online.
+          Use the mobile web version of SocialBooks when online.
           Point your phone at <a href="{{ mobilehost }}">{{ mobilehost }}</a>.
-          For offline reading, export directly from Bookworm to Stanza. <a href="http://www.lexcycle.com/faq/how_to_get_books_onto_stanza_iphone">More hints on this</a>.
+          For offline reading, export directly from SocialBooks to Stanza. <a href="http://www.lexcycle.com/faq/how_to_get_books_onto_stanza_iphone">More hints on this</a>.
           {% endblocktrans %}
         </td>
       </tr>
@@ -174,7 +174,7 @@
         <td><strong>{% trans "Yes" %}</strong></td>
         <td>
           {% blocktrans with MOBILE_HOST as mobilehost %}
-          Use the mobile web version of Bookworm when online.
+          Use the mobile web version of SocialBooks when online.
           Point your phone at <a href="{{ mobilehost }}">{{ mobilehost }}</a>.
           {% endblocktrans %}
         </td>
@@ -195,7 +195,7 @@
         <td>
           {% blocktrans with MOBILE_HOST as mobilehost %}
           The Kindle cannot read ePub files yet, but you can use
-          Bookworm's mobile version over the Kindle's Whispernet by pointing its
+          SocialBooks's mobile version over the Kindle's Whispernet by pointing its
           web browser at <a href="{{ mobilehost }}">{{ mobilehost }}</a>.
           {% endblocktrans %}
         </td>
@@ -214,18 +214,18 @@
   <p>
     {% url openid as openidurl %}
     {% blocktrans %} 
-    You don't need an OpenID to use Bookworm, but we recommend setting one up if you
+    You don't need an OpenID to use SocialBooks, but we recommend setting one up if you
     haven't already.  In fact, you probably already have one.  <a href="{{ openidurl }}">Find out more about OpenID</a>.
     {% endblocktrans %}
   </p>
 
   <a name="api"></a>
-  <h2>{% trans "Can I upload all my files at once or access Bookworm without a browser?" %}</h2>
+  <h2>{% trans "Can I upload all my files at once or access SocialBooks without a browser?" %}</h2>
   <p>
     {% url api_help as api_help %}
     {% blocktrans with CUSTOMER_SERVICE_URL as custserv and CUSTOMER_SERVICE_NAME as custservname %}
-    Yes, we implemented the <a href="{{ api_help }}">Bookworm API</a> to help users and developers
-    use Bookworm in ways we hadn't originally imagined. A savvy developer can use the API to upload a number of ePubs
+    Yes, we implemented the <a href="{{ api_help }}">SocialBooks API</a> to help users and developers
+    use SocialBooks in ways we hadn't originally imagined. A savvy developer can use the API to upload a number of ePubs
     at once or to download all the items in your Library. If you build something with the API, please let us
     know on <a href="{{ custserv }}">{{ custservname }}</a> 
     {% endblocktrans %}
@@ -237,7 +237,7 @@
     {% url about as abouturl %}
     {% blocktrans %}
 
-      There's more information about Bookworm on the <a href="{{ abouturl }}">About</a> page.
+      There's more information about SocialBooks on the <a href="{{ abouturl }}">About</a> page.
     {% endblocktrans %}
   </p>
   <p>

@@ -1,8 +1,8 @@
 {% extends "base.html" %} 
 {% load i18n %}
-{% block title %}{{ _("About Bookworm") }}{% endblock title %}
+{% block title %}{{ _("About Socialbooks") }}{% endblock title %}
 
-{% block header %}{{ _("About Bookworm") }}{% endblock header %}
+{% block header %}{{ _("About Socialbooks") }}{% endblock header %}
 {% block head %}
 <link rel="stylesheet" href="/static/about.css"></link>
 {% endblock head %}
@@ -29,7 +29,7 @@
 
 <hr />
 <p style="font-size:smaller">
-{% blocktrans %}For questions or problems with Bookworm, please contact <a href="mailto:{{ ADMIN_EMAIL }}">{{ ADMIN_EMAIL }}</a>{% endblocktrans %}
+{% blocktrans %}For questions or problems with Socialbooks, please contact <a href="mailto:{{ ADMIN_EMAIL }}">{{ ADMIN_EMAIL }}</a>{% endblocktrans %}
 </p>
 
 <p style="font-size:smaller">
@@ -41,10 +41,10 @@
 
 <div id="bw-content">
   <p id="bw-about-description">
-    {{ _("<strong>Bookworm</strong> is an experimental platform for storing and reading ePub-format books online.")}}
+    {{ _("<strong>Socialbooks</strong> is an experimental platform for storing and reading ePub-format books online.")}}
   </p>
   <div id="bw-tour-toc">
-    <a href="#how_does_it_work">{{ _("How do I use Bookworm?") }}</a>
+    <a href="#how_does_it_work">{{ _("How do I use Socialbooks?") }}</a>
     ~
     <a href="#whats_epub">{{ _("What is ePub?") }}</a>
     ~
@@ -62,30 +62,30 @@
     ~
     <a href="#backup">{{ _("Are my books safe?") }}</a>
     ~
-    <a href="#who">{{ _("Who is responsible for Bookworm?") }}</a>
+    <a href="#who">{{ _("Who is responsible for Socialbooks?") }}</a>
   </div>
 
   <a name="how_does_it_work"></a>
   <h2>{{ _("How does it work?  What do I download?") }}</h2>
   <p>
-    {{ _("The great thing about Bookworm is there's nothing to download!  Here's how it works:")}}
+    {{ _("The great thing about Socialbooks is there's nothing to download!  Here's how it works:")}}
   </p>
   <div id="bw-howto" class="bw-info-box">
     <ol id="bw-howto-list">
-      <li> <a href="{% url user_signup %}">{{ _("Create a Bookworm account and log in") }}</a> </li>
+      <li> <a href="{% url user_signup %}">{{ _("Create a Socialbooks account and log in") }}</a> </li>
       <li> <a href="{% url upload %}">{{ _("Upload an ePub book") }}</a></li>
       <li> {{ _("Start reading by just clicking on the book title in your library!") }}</li>
     </ol>
   </div>
 
   <p>
-    {% blocktrans %}Because your books are stored on the Bookworm site, you can read them from any web browser
+    {% blocktrans %}Because your books are stored on the Socialbooks site, you can read them from any web browser
     and on most mobile web devices, anywhere in the world!  We're working on ways for you to read your
     book content on your mobile phone even when you aren't connected to the internet.{% endblocktrans %}
   </p>
   <p>
     {% url tour as toururl %}
-    {% blocktrans %}<a href="{{ toururl }}">Take the tour</a> to see an example of Bookworm in action.{% endblocktrans %}
+    {% blocktrans %}<a href="{{ toururl }}">Take the tour</a> to see an example of Socialbooks in action.{% endblocktrans %}
     
   </p>
   <a name="whats_epub"></a>
@@ -98,22 +98,22 @@
     be read on web browsers. {% endblocktrans %}
   </p>
   <p>
-    {% blocktrans %}ePub books can be read on your home computer (using Bookworm, Adobe Digital Editions or Stanza), 
-    on your iPhone (using Bookworm or Stanza) and on the Sony Reader{% endblocktrans %}
+    {% blocktrans %}ePub books can be read on your home computer (using Socialbooks, Adobe Digital Editions or Stanza), 
+    on your iPhone (using Socialbooks or Stanza) and on the Sony Reader{% endblocktrans %}
   </p>
   <p><a href="{% url epub %}">{{ _("More about ePub")}}</a></p>
 
   <a name="mobile"></a>
-  <h2>{{ _("Can I use Bookworm on my mobile device?") }}</h2>
+  <h2>{{ _("Can I use Socialbooks on my mobile device?") }}</h2>
   <p>
-    {% blocktrans with MOBILE_HOST as mobilehost %}<a href="{{ toururl }}#step3"><img src="/static/images/screenshots/iphone.png" alt="Bookworm on the iPhone" class="bw-screenshot-page" align="right" style="margin-bottom:10px" width="100"/></a>
+    {% blocktrans with MOBILE_HOST as mobilehost %}<a href="{{ toururl }}#step3"><img src="/static/images/screenshots/iphone.png" alt="Socialbooks on the iPhone" class="bw-screenshot-page" align="right" style="margin-bottom:10px" width="100"/></a>
     Absolutely!  A special version of the site optimized for mobile devices (especially 
     the iPhone) is available at <a href="{{ mobilehost }}">{{ mobilehost }}</a>.
-    Bookworm has also been tested on the Blackberry, Opera Mobile, Skyfire and the Kindle's Whispernet service.{% endblocktrans %}
+    Socialbooks has also been tested on the Blackberry, Opera Mobile, Skyfire and the Kindle's Whispernet service.{% endblocktrans %}
   </p>
   <p>
-    {% blocktrans %}In addition to reading material directly on Bookworm, iPhone users can export their
-    Bookworm books to <a href="http://www.lexcycle.com/">Stanza</a>.   For more
+    {% blocktrans %}In addition to reading material directly on Socialbooks, iPhone users can export their
+    Socialbooks books to <a href="http://www.lexcycle.com/">Stanza</a>.   For more
     information, see the <a href="{{ toururl }}#step4">tour</a>.{% endblocktrans %}
   </p>
   <a name="where_epubs"></a>
@@ -127,14 +127,14 @@
   <h2>{{ _("I'm not able to read this ePub book I uploaded")}}</h2>
   <p>
     {% blocktrans %}There may be a problem with the e-book (many publishers are still
-    learning how to create them), or there may be a bug in Bookworm.
+    learning how to create them), or there may be a bug in Socialbooks.
     If you encounter an error while uploading or reading a book, the
-    Bookworm developers are automatically notified and will fix the
+    Socialbooks developers are automatically notified and will fix the
     problem if possible.{% endblocktrans %}
   </p>
   <p>
     {% blocktrans %}It may also be that you've uploaded a book that includes Digital
-    Rights Management (DRM).  Bookworm does not support DRM'ed books.
+    Rights Management (DRM).  Socialbooks does not support DRM'ed books.
     Check the website where you purchased the book for information on
     how to read it (and complain to the publisher that you can't read
     your books where you'd like!){% endblocktrans %}
@@ -142,38 +142,38 @@
   <p>
     {% url help as helpurl %}
     {% blocktrans %}Please also see the <a href="{{ helpurl }}">Help</a> page for more
-    tips on troubleshooting Bookworm.{% endblocktrans %}
+    tips on troubleshooting Socialbooks.{% endblocktrans %}
   </p>
   <a name="publisher"></a>
   <h2>{{ _("I'm a publisher and I have questions or feature requests") }}</h2>
   <p>
     {% blocktrans %}Threepress is a publisher-serving corporation with many years of experience in building
     products in the industry.  We would be happy to discuss the ePub format, getting your books
-    into ePub and even extending Bookworm with custom features for your publications.  Please
+    into ePub and even extending Socialbooks with custom features for your publications.  Please
     contact <a href="mailto:{{ ADMIN_EMAIL }}">{{ ADMIN_EMAIL }}</a>
     and we'll get back to you right away.{% endblocktrans %}
   </p>
   <a name="other_formats"></a>
   <h2>{{ _("Will other book formats be supported, such as PDF or mobi? What about DRM ebooks?") }}</h2>
   <p>
-    {% blocktrans %}Bookworm is meant to push adoption of the open ePub format and there are no plans to 
+    {% blocktrans %}Socialbooks is meant to push adoption of the open ePub format and there are no plans to 
     support closed formats like mobi or those with limited flexibility like PDF.  {% endblocktrans %}
   </p>
   <p>
     {% blocktrans %}DRM (digital rights management) has been shown to be detrimental to technology adoption,
     does not significantly prevent piracy, and provides a terrible user experience.
-    Bookworm will never support DRM'ed ebooks that require special software to unlock.
+    Socialbooks will never support DRM'ed ebooks that require special software to unlock.
     Instead we encourage publishers to explore forms of "soft" DRM (such as watermarking digital books with the name of the purchaser).{% endblocktrans %}
   </p>
   <a name="sharing"></a>
   <h2>
-    {% blocktrans %}Is it possible to share my books with other Bookworm users, or link to one of my books?{% endblocktrans %}
+    {% blocktrans %}Is it possible to share my books with other Socialbooks users, or link to one of my books?{% endblocktrans %}
   </h2>
 
   <p>
-    {% blocktrans %}There is limited support for sharing on Bookworm.  Books that are in the public domain,
+    {% blocktrans %}There is limited support for sharing on Socialbooks.  Books that are in the public domain,
     books uploaded by their own authors, or publishers who authorize books to be public
-    can all make Bookworm books accessible to the larger internet.{% endblocktrans %}
+    can all make Socialbooks books accessible to the larger internet.{% endblocktrans %}
   </p>
   <p>
     {% blocktrans %}Public books are in a very early beta stage.  To request that a book be made public, please contact <a href="mailto:{{ ADMIN_EMAIL }}">{{ ADMIN_EMAIL }}</a> for more information.{% endblocktrans %}
@@ -183,7 +183,7 @@
 </h2>
   <p>
 {% blocktrans %}
-    Although books are backed up, Bookworm is not a commercial product
+    Although books are backed up, Socialbooks is not a commercial product
     and has limited financial and legal resources.
     No guarantees are provided for the security of your books or the reliability of the service.
     Store copies of all your books on your own computers.
@@ -191,10 +191,10 @@
   </p>
   <a name="who"></a>
   <h2>
-  {% blocktrans %}Who is responsible for Bookworm?{% endblocktrans %}</h2>
+  {% blocktrans %}Who is responsible for Socialbooks?{% endblocktrans %}</h2>
   <p>
 {% blocktrans with HOSTING_CREDIT as hosting and HOSTING_CREDIT_URL as hostingurl %}
-    Bookworm software is free and available for download under the
+    Socialbooks software is free and available for download under the
     terms of the BSD license from the <a
     href="http://threepress.org/tools/">tools page</a>. It
     is a product of <a
@@ -208,7 +208,7 @@
   </p>
   <p>
 {% blocktrans %}
-Bookworm has been made possible by many individuals who have helped with
+Socialbooks has been made possible by many individuals who have helped with
   testing and supported the project throughout:
   {% endblocktrans %}
   <ul>

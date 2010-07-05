@@ -1,5 +1,5 @@
 from django import forms
-from bookworm.library.models import UserPref
+from socialbooks.library.models import UserPref
 
 class EpubValidateForm(forms.Form):
     epub = forms.FileField()

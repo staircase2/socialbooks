@@ -1,7 +1,7 @@
 import urllib, logging
 from lxml import etree
 from django.conf import settings
-from bookworm.library.epub import toc
+from socialbooks.library.epub import toc
 from django.utils.translation import ugettext as _
 
 log = logging.getLogger(__name__)

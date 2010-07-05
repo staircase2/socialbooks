@@ -2,8 +2,8 @@ import os.path
 
 from django.conf import settings
 
-from bookworm.library.testmodels import MockEpubArchive
-from bookworm.library import models as library_models
+from socialbooks.library.testmodels import MockEpubArchive
+from socialbooks.library import models as library_models
 
 # Data for public epub documents
 DATA_DIR = unicode(os.path.join(os.path.dirname(os.path.abspath(__file__)), 'test-data/data'))

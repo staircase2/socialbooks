@@ -7,14 +7,14 @@
 {% endblock %}
 
 {% block leftnav %}
-<p>{% trans "If you're new to Bookworm, link your OpenID with a new account. If you're already a Bookworm member, link it with your existing account." %}</p>
+<p>{% trans "If you're new to SocialBooks, link your OpenID with a new account. If you're already a SocialBooks member, link it with your existing account." %}</p>
 
 {% endblock leftnav %}
 
 {% block main %}
 
 <div id="bw-content">
-<h2>{% trans "Link an OpenID with your existing Bookworm account" %}</h2>
+<h2>{% trans "Link an OpenID with your existing SocialBooks account" %}</h2>
 
 
 
@@ -46,7 +46,7 @@
       <legend>{% trans "I'm new here" %}</legend>
       <label for="id_username">{% trans "Username" %}</label>{{ form1.username }}
       <label for="id_email">{% trans "Email" %}</label>{{ form1.email }}
-      <input type="submit" name="bnewaccount" value="{{ _("Create a new Bookworm account") }}" />
+      <input type="submit" name="bnewaccount" value="{{ _("Create a new SocialBooks account") }}" />
     </fieldset>
   </form>
 </div>
@@ -58,7 +58,7 @@
   <form name="fverify" action="{{ action }}" method="POST">
     {{ form.next }}
     <fieldset>
-      <legend>{% trans "I already have a Bookworm account" %}</legend>
+      <legend>{% trans "I already have a SocialBooks account" %}</legend>
       <label for="id_username">{% trans "Screen name" %}</label>{{ form2.username }}
       <label for="id_passwordl">{% trans "Password" %}</label>{{ form2.password }}
       <input type="submit" name="bverify" value="{{ _("Associate with my OpenID") }}" />

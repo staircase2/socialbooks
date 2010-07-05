@@ -2,7 +2,7 @@
 {% load humanize %}
 {% load cache %}
 {% load i18n %}
-{% load bookworm %}
+{% load socialbooks %}
 
 {% block title %}{% trans "My epub library" %}{% endblock title %}
 
@@ -78,7 +78,7 @@
   {% endif %}
 
 {% else %}
-  <h1 id="bw-logo-image-header"><img id="bw-logo-image" src="/static/bookworm-logo.png" alt="{% trans "Bookworm" %}" /></h1> 
+  <h1 id="bw-logo-image-header"><img id="bw-logo-image" src="/static/socialbooks-logo.png" alt="{% trans "SocialBooks" %}" /></h1> 
   {% url about as abouturl %}
   <p class="bw-tagline">{% blocktrans %}A free platform for reading ePub books online. <a href='{{ abouturl }}'>Learn more</a>.{% endblocktrans %}</p> 
 {% endif %}
@@ -117,7 +117,7 @@
     {% endcache %}
 {% if not documents.count %}
    <p>
-     {% trans "Once you've gotten one of these books on your computer, you can upload them to your new Bookworm account." %}
+     {% trans "Once you've gotten one of these books on your computer, you can upload them to your new SocialBooks account." %}
    </p>
 {% endif %}
 
