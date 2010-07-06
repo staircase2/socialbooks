@@ -13,7 +13,7 @@ sitemaps = {
 urlpatterns = patterns('',
 
 	(r'^%sadmin/(.*)' % settings.BASE_URL,  admin.site.root),
-	( r'^%sr/' % settings.BASE_URL, include('django.conf.urls.shortcut')),
+	(r'^%sr/' % settings.BASE_URL, include('django.conf.urls.shortcut')),
 	
 	# Sitemaps
 	(r'^%ssitemap.xml$' % settings.BASE_URL, 'django.contrib.sitemaps.views.sitemap', {'sitemaps': sitemaps}),
