@@ -62,6 +62,7 @@ MEDIA_ROOT = os.path.join(ROOT_PATH, 'library', 'storage')
 # trailing slash if there is a path component (optional in other cases).
 # Examples: "http://media.lawrence.com", "http://example.com/media/"
 MEDIA_URL = '/static/'
+ORM_MEDIA_URL = '/orm-media/'
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
 # trailing slash.
@@ -76,6 +77,21 @@ TEMPLATE_LOADERS = (
     'django.template.loaders.filesystem.Loader',
     'django.template.loaders.app_directories.Loader',
 #     'django.template.loaders.eggs.Loader',
+)
+
+TEMPLATE_CONTEXT_PROCESSORS = (
+	"django.contrib.auth.context_processors.auth",
+	"django.core.context_processors.debug",
+	"django.core.context_processors.i18n",
+	"django.core.context_processors.media",
+	"django.core.context_processors.request",
+	"django.contrib.messages.context_processors.messages",
+    "socialbooks.library.context_processors.nav",
+    "socialbooks.library.context_processors.mobile",
+    "socialbooks.library.context_processors.local_settings",
+    "socialbooks.library.context_processors.profile",
+    "socialbooks.search.context_processors.search"
+
 )
 
 MIDDLEWARE_CLASSES = (
@@ -98,6 +114,20 @@ MIDDLEWARE_CLASSES = (
     'socialbooks.api.middleware.SSLRedirect',
     'socialbooks.api.middleware.APIKeyCheck',
 
+)
+
+ugettext = lambda s: s
+
+# Only allow the list of languages for which we have translations
+LANGUAGES = (
+  ('de', ugettext('German')),
+  ('en', ugettext('English')),
+  ('da', ugettext('Danish')),
+  ('fi', ugettext('Finnish')),
+  ('it', ugettext('Italian')),
+  ('es', ugettext('Spanish')),
+#  ('zh-tw', ugettext('Simplified Chinese')),
+#  ('he', ugettext('Hebrew')),
 )
 
 ROOT_URLCONF = 'socialbooks.urls'
