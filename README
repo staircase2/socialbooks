@@ -7,7 +7,7 @@ Bookworm Installation Guide
 Prerequisites
 =============
     
-1. Django 1.0.2 release
+1. Django svn-trunk release
 2. Python 2.5 or 2.6 (virtualenv recommended)
 3. MySQL or other supported database (should be able to override in `local.py`)
 
@@ -19,24 +19,18 @@ Via easy_install:
   * lxml
   * BeautifulSoup
 
+Via Ubuntu Repos:
+  * django-south
+
+
 Running `setup.py install` will install these packages for you.
+NOTE: setup.py not available as of now. Manually install above packages with pip
 
-svn externals will install three packages for you:
-
-  * django_evolution
+Google up the source tarballs for the below packages, and place it into src/ in your project directory.
+Find the proper source directory (ie. the one with __init__.py), and symlink that into the project directory.
   * minidetector
   * gdata
 
-You will want to run `python setup.py install` on gdata.
-
-Patching Django
-===============
-
-Bookworm requires one small patch that affects tests only.  It can be
-found in the `patches/` directory and should be applied to your Django
-source folder as:
-
-`patch -p1 < /path/to/bookworm/patches/0002_generate_cache_key.diff`
 
 Database
 ========
