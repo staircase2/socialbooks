@@ -236,8 +236,8 @@ def signin(request):
 
 
     return render('authopenid/signin.html', {
-        'form1': form_auth,
-        'form2': form_signin,
+        'lform': form_auth,
+        'oidform': form_signin,
         'action': request.path,
         'msg':  request.GET.get('msg',''),
         'signin_page': True,
@@ -451,8 +451,8 @@ def signup(request):
             return HttpResponseRedirect(next)
     
     return render('authopenid/signup.html', {
-        'form': form,
-        'form2': form_signin,
+        'regform': form,
+        'oidform': form_signin,
         'action': request.path,
         'action_signin': action_signin,
         }, context_instance=RequestContext(request))

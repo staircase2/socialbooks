@@ -71,11 +71,11 @@ jQuery(document).ready(function() {
 			<fieldset>
 				<legend>{% trans "Sign up <!-- trans: on SocialBooks itself rather than via OpenID -->" %}</legend>
 				
-				<label for="id_username">{% trans "Username" %}:</label>{{ form.username }}
+				<label for="id_username">{% trans "Username" %}:</label>{{ regform.username }}
 				
-				<label for="id_email">{% trans "Email" %}:</label>{{ form.email }}
-				<label for="id_password1">{% trans "Password" %}:</label>{{ form.password1 }}
-				<label for="id_password2">{% trans "Confirm password" %}:</label>{{ form.password2 }}
+				<label for="id_email">{% trans "Email" %}:</label>{{ regform.email }}
+				<label for="id_password1">{% trans "Password" %}:</label>{{ regform.password1 }}
+				<label for="id_password2">{% trans "Confirm password" %}:</label>{{ regform.password2 }}
 				
 				<input type="submit" value="{% trans "Sign up" %}" name="register_local"/>
 			</fieldset>
@@ -87,7 +87,7 @@ jQuery(document).ready(function() {
 			<form name="fopenid" action="{{ action_signin }}" method="post" class="auth-form">
 				<fieldset>
 					<legend><img src="{{ MEDIA_URL }}library/openid-logo.png" alt="{{ _("Use my OpenID")}}" /></legend>
-					{{ form2.openid_url }}
+					{{ oidform.openid_url }}
 					<input name="bsignin" type="submit" value="{{ _("Sign up with OpenID") }}" />
 					<p style="color:gray">({% trans "If you have a Yahoo account, try typing <em>yahoo.com</em> here." %})</p>
 					<a href="#openid" class="auth-what-is-openid-link">{% trans "What's this?" %}</a>          
