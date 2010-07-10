@@ -1,7 +1,7 @@
 {% load i18n %}
-    <div id="bw-what-is-openid" style="width:400px;display:none">
+    <div id="auth-what-is-openid" style="display:none">
       <p>
-      <img src="/static/images/openid-large.png" align="right" style="padding-right:2em" width="100"/>
+      <img src="{{ MEDIA_URL }}library/images/openid-large.png" align="right" style="padding-right:2em" width="100"/>
 
       <h1>{% trans "What is OpenID?" %}</h1>
       </p>
@@ -20,7 +20,7 @@
         {% endblocktrans %}
       </p>
       <ul>
-        <li> <a href="http://openid.yahoo.com/">Yahoo</a>        </li>
+        <li> <a href="http://openid.yahoo.com/">Yahoo</a></li>
         <li> {% blocktrans %}AOL or AIM users: Your OpenID is <em>openid.aol.com/your-screenname</em> {% endblocktrans %}</li>
         <li> <a href="http://faq.wordpress.com/2007/03/06/what-is-openid/">Wordpress</a></li>
         <li> <a href="http://www.37signals.com/openid/">{% blocktrans %}Basecamp, Highrise  Backpack {% endblocktrans %}</a></li>

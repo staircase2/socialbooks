@@ -1,0 +1,12 @@
+/** Sidebar **/
+
+#sidebar {
+	display: table-cell;
+	padding: 0px 40px;
+	width: 300px;
+}
+
+#main {
+	display: table-cell;
+	width: 600px;
+}

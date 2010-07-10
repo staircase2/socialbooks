@@ -1,20 +1,61 @@
-#bw-content form input { 
-  display:block;
-  margin: 1em 1em 1em 1em;
-}
-#bw-content form label {
-  font-weight: bold;
-  color: #5F5B4B;
-  font-size: larger;
-
-}
-#bw-content form legend {
-  color: #5F5B4B;
-  font-weight:bold;
-  font-size:large;
-
+#signup p {
+	margin-bottom: 5px;
 }
 
-#bw-content form fieldset {
-  border: 1px solid rgb(200,200,200) ;
+#signup-about {
+	color:gray;
+	font-size: 22px;
+	margin-bottom: 20px;
+}
+
+
+.auth-form input { 
+	display:block;
+	margin: 0em 1em 1em 1em;
+}
+
+.auth-form label {
+	font-weight: bold;
+	color: #5F5B4B;
+	font-size: larger;
+}
+
+.auth-form legend {
+	color: #5F5B4B;
+	font-weight:bold;
+	font-size:large;
+}
+
+
+.auth-form fieldset {
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	border: 2px solid rgb(200,200,200) ;
+	padding: 15px;
+}
+
+
+#auth-what-is-openid {
+	background-color: rgb(255,255,240);
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	box-shadow: 7px 7px 10px #ccc;
+	-webkit-box-shadow: 7px 7px 10px #ccc;
+	-moz-box-shadow: 7px 7px 10px #ccc;
+	border: 2px solid rgb(255, 208, 0);
+	padding: 15px;
+	width: 600px;
+		
+	/** positioning **/
+	position: absolute;
+	top: 270px;
+	left: 360px;	
+}
+
+#auth-what-is-openid ul {
+	padding-left: 30px;
+}
+
+#auth-what-is-openid ul li {
+	list-style-type: circle;
 }

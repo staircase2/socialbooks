@@ -39,18 +39,26 @@
 	<div id="header">
 		<div id="header-logo">
 			<h1><a href="{% url index %}">{% trans "SocialBooks"|lower %}</a></h1>
-			<h2><a href="{% url index %}">{% trans "Reading Made Social" %}</a></h2>			
+			<!--<h2><a href="{% url index %}">{% trans "Reading Made Social" %}</a></h2>-->
 		</div>	
 		
 		<div id="header-nav">
 			<ul class="linear">
 				<li><a href="{% url user_signin %}">{% trans "Sign In" %}</a></li> | 
-				<li><a href="{% url user_signup %}">{% trans "Register" %}</a></li>
+				<li><a href="{% url user_signup %}">{% trans "Sign Up" %}</a></li>
 			</ul>
 		</div>
 	</div>
 
 	<div id="content">
+		{% if messages %}
+		<ul class="messages">
+			{% for message in messages %}
+			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+			{% endfor %}
+		</ul>
+		{% endif %}
+	
 		{% block content %}{% endblock %}
 	</div>
 

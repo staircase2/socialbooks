@@ -1,0 +1,18 @@
+{% extends "shell.html" %}
+
+{% load i18n %}
+
+{% block css %}
+	<link href="{{ MEDIA_URL }}css/sidebar.css" media="screen" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+{% block content %}
+	<div id="sidebar">
+		{% block sidebar %}{% endblock %}
+	</div>
+
+	<div id="main">
+		{% block main %}{% endblock main %}
+	</div>
+
+{% endblock content %}
