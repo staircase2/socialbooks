@@ -20,7 +20,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	background: transparent;
 }
 body {
-	background: #fef7ed;
+	background: #fff; /*#fef7ed;*/
 	color: #555;
 	font-family: "Helvetica Neue", "Trebuchet MS", "Tahoma", sans-serif;
 	line-height: 1;
@@ -48,6 +48,9 @@ table {
 	border-spacing: 0;
 }
 
+p {
+	margin: 15px 0px;
+}
 
 /** Clearing div **/
 /* =Clearfix (all browsers)
@@ -79,16 +82,21 @@ a, a:hover, a:visited {
 
 /** Header **/
 #header {
-	background: #a7a7a7; /** Non-CSS3 browsers **/	
+	/*
+	background: #a7a7a7; /** Non-CSS3 browsers **	
 	background: -moz-linear-gradient(top, #cbcbcb, #a7a7a7);
 	background: -webkit-gradient(linear, left top, left bottom, from(#cbcbcb), to(#a7a7a7));
+	*/
 	/*border-bottom: 1px solid #555;*/
+	font-family: "Droid Sans", "Helvetica", "Arial", sans-serif;
+	height: 68px;
 	text-shadow: 0px 2px 1px #ddd;
 }
 
 #header-logo {
+	font-size: 1.5em;
 	margin-left: 10px;
-	
+	padding: 10px 0px;
 }
 
 #header-nav {
@@ -113,7 +121,7 @@ a, a:hover, a:visited {
 
 #index-title {
 	font-family: "IM Fell English", "Helvetica", "Arial", sans-serif;
-	font-size: 5.0em;
+	font-size: 7.0em;
 	letter-spacing: -4px;
 	margin: auto;
 	text-align: center;
@@ -131,8 +139,6 @@ a, a:hover, a:visited {
 	padding: 12px;
 	vertical-align: top;
 	width: 22%;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
 	/*border:1px solid #000;
 	background: -moz-linear-gradient(top, #a3823e, #fef7ed);
 	background: -webkit-gradient(linear, left top, left bottom, from(#a3823e), to(#fef7ed));*/
@@ -149,6 +155,7 @@ a, a:hover, a:visited {
 #footer {
 	font-size: 0.8em;
 	font-weight: bold;
+	margin-top: 30px;
 	text-shadow: 0px 2px 1px #eee;
 }
 
