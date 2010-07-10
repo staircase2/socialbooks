@@ -169,7 +169,7 @@ AUTH_PROFILE_MODULE = "library.userpref"
 
 ugettext = lambda s: s
 LOGIN_URL = '/%s%s%s' %  (BASE_URL, ugettext('account/'), ugettext('signin/'))
-SITE_ID = 2
+
 
 DEFAULT_NUM_RESULTS = 20
 DEFAULT_START_PAGE = 1
