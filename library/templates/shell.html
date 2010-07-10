@@ -44,8 +44,13 @@
 		
 		<div id="header-nav">
 			<ul class="linear">
+				{% if user.is_authenticated %}
+				<li>{% trans "Hello" %}, <a href="{% url profile %}">{{ user.username }}</a>!</li> |
+				<li><a href="{% url user_signout %}">{% trans "Sign Out" %}</a></li>
+				{% else %}
 				<li><a href="{% url user_signin %}">{% trans "Sign In" %}</a></li> | 
 				<li><a href="{% url user_signup %}">{% trans "Sign Up" %}</a></li>
+				{% endif %}
 			</ul>
 		</div>
 	</div>
