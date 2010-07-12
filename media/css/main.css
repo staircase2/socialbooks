@@ -80,6 +80,57 @@ a, a:hover, a:visited {
 	text-decoration: none;
 }
 
+/** Generic styled form **/
+.styled-form {
+	margin: 10px 0px;
+}
+
+.styled-form li {
+	margin: 10px 0px;
+}
+
+.styled-form .label {
+	display: inline-block;
+	padding-right: 15px;
+	text-align: right;
+	vertical-align: top;
+	width: 10em;
+}
+
+.styled-form .info {
+	display: inline-block;
+	vertical-align: top;
+	width: 30em;
+}
+
+.styled-form .errorlist {
+	background-color: #fff2f4;
+	border-top: 1px solid #a62839;
+	border-bottom: 1px solid #a62839;
+	color: #a62839;
+	font-size: 0.8em;
+	font-family: "Arial", sans-serif;
+	margin: 5px 0px;
+	width: 20em;
+}
+
+.errorlist li {
+	margin: 3px 0px;
+	padding: 5px;
+}
+
+.non-field-errors .errorlist {
+	width: 40em;
+}
+
+.styled-form fieldset {
+	border-radius: 10px;
+	-moz-border-radius: 10px;
+	border: 2px solid rgb(200,200,200) ;
+	padding: 15px;
+}
+
+
 /** Header **/
 #header {
 	/*
