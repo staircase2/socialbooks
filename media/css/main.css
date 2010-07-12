@@ -16,7 +16,7 @@ table, caption, tbody, tfoot, thead, tr, th, td {
 	border: 0;
 	outline: 0;
 	/*font-size: 100%;*/
-	vertical-align: baseline;
+	/*vertical-align: baseline;*/
 	background: transparent;
 }
 body {
@@ -49,7 +49,7 @@ table {
 }
 
 p {
-	margin: 15px 0px;
+	margin: 10px 0px;
 }
 
 /** Clearing div **/
@@ -78,6 +78,10 @@ a, a:hover, a:visited {
 	color: #222;
 	cursor: pointer;
 	text-decoration: none;
+}
+
+#content a {
+	color: #428542;
 }
 
 /** Generic styled form **/
@@ -130,6 +134,64 @@ a, a:hover, a:visited {
 	padding: 15px;
 }
 
+
+/** Messages framework styling **/
+#messages {
+	font-size: 0.9em;
+	font-family: "Arial", sans-serif;
+	/*margin: 5px 0px;*/
+	/*margin: auto;
+	position: absolute;
+	top: 0px;
+	left: 25%;
+	width: 50%;
+	z-index: 1;*/
+	position: absolute;
+	top: 68px;
+	width: 100%;
+}
+
+#messages li {
+	/*
+	-webkit-border-bottom-right-radius: 7px;
+	-webkit-border-bottom-left-radius: 7px;
+	-moz-border-radius-bottomright: 7px;
+	-moz-border-radius-bottomleft: 7px;
+	border-bottom-right-radius: 7px;
+	border-bottom-left-radius: 7px;*/
+	border: 1px solid;
+	/*margin: 3px 0px;*/
+	padding: 5px 0px 5px 50px;
+}
+
+#messages .success {
+	background: rgba(218,240,218, 0.8) /*#daf0da*/ url(/media/img/ok.png) no-repeat 8px 5px;
+	border-top: 1px solid #006900;
+	border-bottom: 1px solid #006900;
+	color: #006900;
+}
+
+#messages .error {
+	background: rgba(255,242,244, 0.8) /*#fff2f4*/ url(/media/img/error.png) no-repeat 8px 5px;
+	border-top: 1px solid #a62839;
+	border-bottom: 1px solid #a62839;
+	color: #a62839;	
+}
+
+#messages .info {
+	background: rgba(255,255,240, 0.8) /*#fffff0*/ url(/media/img/alert.png) no-repeat 8px 5px;
+	border-top: 1px solid #ffd000;
+	border-bottom: 1px solid #ffd000;
+	color: #e0ac00;
+}
+
+
+/** Notes and other miscellaneous text **/
+.note {
+	color: gray;
+	font-size: 0.7em;
+	font-style: italic;
+}
 
 /** Header **/
 #header {
