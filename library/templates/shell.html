@@ -3,7 +3,7 @@
 <html lang="">
 <head>
   <meta charset="utf-8">
-	<title>{% trans "SocialBooks - Reading Made Social" %}</title>
+	<title>SocialBooks - {% block title %}{% trans "Reading Made Social" %}{% endblock title %}</title>
 	<meta name="description" content="" />
   	<meta name="keywords" content="epub ebooks reading social" />
 	
@@ -22,7 +22,7 @@
 			}
 		}
 	</script>
-	
+		
 	{% if OFFLINE %}
 		<script src="{{ MEDIA_URL }}/js/jquery-1.4.2.min.js" type="text/javascript"></script>
 		<script src="{{ MEDIA_URL }}/js/webfont-1.0.4.js" type="text/javascript"></script>
@@ -57,11 +57,13 @@
 
 	<div id="content">
 		{% if messages %}
-		<ul class="messages">
-			{% for message in messages %}
-			<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
-			{% endfor %}
-		</ul>
+		<div id="messages">
+			<ul>
+				{% for message in messages %}
+				<li{% if message.tags %} class="{{ message.tags }}"{% endif %}>{{ message }}</li>
+				{% endfor %}
+			</ul>
+		</div>
 		{% endif %}
 	
 		{% block content %}{% endblock %}
