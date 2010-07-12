@@ -1,51 +1,75 @@
-{% extends "base.html" %}
+{% extends "sidebar.html" %}
 {% load i18n %}
 
-{% block title %}{% trans "Delete profile of" %}{{ request.user.username }}{% endblock %}
+{% block title %}{% trans "Delete profile of" %} {{ request.user.username }}{% endblock %}
 {% block head %}
-<link rel="stylesheet" type="text/css" href="/static/auth.css" ></link>
+<link rel="stylesheet" type="text/css" href="{{ MEDIA_URL }}library/auth.css" ></link>
+
+<style type="text/css">
+	.styled-form .label {
+		width: 13em;
+	}
+</style>
+
 {% endblock head %}
 {% block searcharea %}{% endblock %}
+
+
 {% block main %}
+<div id="user-delete">
+	<form action="." method="post" class="styled-form">
+		<fieldset>
+			<legend>{% trans "Delete account" %}</legend>
+			<input type="hidden" name="delete" value="{{ request.user.email }}" />
+			
+			<p>
+			  {% blocktrans %}
+			  You can <strong>delete all personal information</strong> from this application, including
+			  any profile information and all e-books.
+			  {% endblocktrans %}
+			</p>
+			<p><strong>{% blocktrans %}This action cannot be undone.{% endblocktrans %}</strong></p>
 
-<div id="bw-content">
-<br />
-<form action="." method="post">
-  <fieldset>
-    <legend>{% trans "Delete account" %}</legend>
-    <input type="hidden" name="delete" value="{{ request.user.email }}" />
-    <p>
-      {% blocktrans %}
-      You can <strong>delete all personal information</strong> from this application, including
-      any profile information and all e-books.
-      {% endblocktrans %}
-    </p>
-    <p><strong>      {% blocktrans %}This action cannot be undone.      {% endblocktrans %}</strong></p>
+			{% if form.errors %}
+			<h3>{% trans "Please correct the errors below" %}</h3>
+			{% endif %}
 
-    {% if form.errors %}
-    <p class="bw-message">{% trans "Please correct the errors below" %}:<br />
-    <span class="bw-error"> {{ form.non_field_errors }}</span>
-    {% endif %}
-    </p>
-    {% if msg %}
-    <p class="bw-message">{% trans "Please correct the errors below" %}:<br />
-    <span class="bw-error">{{ msg }}</span>
-    </p>
-    {% endif %}
+			<div class="non-field-errors">
+				{{ form.non_field_errors }}
+			</div>
+			
+			<div class="fields">
+				<ul>
+					{% if request.openid %}
+					<li>
+						<div class="label">{{ form.openid_url.label_tag }}</div>
+						<div class="info">
+							{{ form.openid_url }}
+							<code>{{ form.openid_url.errors }}</code>
+						</div>
+					</li>
+					{% else %}
+					<li>
+						<div class="label">{{ form.password.label_tag }}</div>
+						<div class="info">
+							{{ form.password }}
+							<code>{{ form.password.errors }}</code>
+						</div>
+					</li>
+					{% endif %}
 
-    {% if request.openid %}
-      <label style="display:block" for="id_openid">OpenID URL</label>
-      {{ form.openid_url }}
-    {% else %}
-      <label style="display:block" for="id_password">{% trans "Password" %}</label>
-      {{ form.password }}
-    {% endif %}
-
-    <label for="confirm" >{% trans "I'm sure I want to delete all my personal information and books." %}</label>
-    {{ form.confirm }}
-    {{ form.confirm.errors }}
-    <input type="submit" value="{{ _("Delete my profile") }}" />
-  </fieldset>
-</form>
+					<li>
+						<div class="label">{{ form.confirm.label_tag }}</div>
+						<div class="info">
+							{{ form.confirm }}
+							<code>{{ form.confirm.errors }}</code>
+						</div>
+					</li>
+			    </ul>
+			</div>
+			
+			<input type="submit" value="{{ _("Delete my profile") }}" />
+		</fieldset>
+	</form>
 </div>
 {% endblock main %}

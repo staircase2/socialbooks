@@ -300,9 +300,9 @@ class RegistrationForm(forms.Form):
 
 class ChangepwForm(forms.Form):
     """ change password form """
-    oldpw = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict))
-    password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict))
-    password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict))
+    oldpw = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict), label=_("Old password"))
+    password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict), label=_("New password"))
+    password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict), label=_("Confirm new password"))
 
     def __init__(self, data=None, user=None, *args, **kwargs):
         if user is None:
@@ -325,7 +325,7 @@ class ChangepwForm(forms.Form):
                 'password2' in self.cleaned_data and \
            self.cleaned_data['password1'] == self.cleaned_data['password2']:
             return self.cleaned_data['password2']
-        raise forms.ValidationError(_("new passwords do not match each other"))
+        raise forms.ValidationError(_("New passwords do not match each other"))
         
         
 class ChangeemailForm(forms.Form):
@@ -363,9 +363,9 @@ class ChangeopenidForm(forms.Form):
 
 class DeleteForm(forms.Form):
     """ confirm form to delete an account """
-    confirm = forms.CharField(required=True, widget=forms.CheckboxInput(attrs={'style':'display:inline', 'class':'required'}))
     password = forms.CharField(required=False, widget=forms.PasswordInput(attrs={'autocomplete':'off'}))
-    openid_url = forms.CharField(required=False,widget=forms.TextInput(attrs={'autocomplete':'on'}))
+    openid_url = forms.CharField(required=False,widget=forms.TextInput(attrs={'autocomplete':'on'}), label=_("OpenID URL"))
+    confirm = forms.CharField(required=True, widget=forms.CheckboxInput(attrs={'style':'display:inline', 'class':'required'}), label=_("I'm sure I want to delete all my personal information and books."))
 
     def __init__(self, data=None, files=None, auto_id='id_%s',
             prefix=None, initial=None, user=None):
