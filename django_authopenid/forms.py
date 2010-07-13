@@ -250,7 +250,7 @@ class RegistrationForm(forms.Form):
     password1 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
             label=u'Password')
     password2 = forms.CharField(widget=forms.PasswordInput(attrs=attrs_dict),
-            label=u'Password (again, to catch typos)')
+            label=u'Confirm password')
 
     def clean_username(self):
         """

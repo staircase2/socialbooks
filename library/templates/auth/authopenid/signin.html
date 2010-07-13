@@ -54,12 +54,13 @@ jQuery(document).ready(function() {
 	<div id="signin-forms" class="login"> 
 		<h2>{% trans "Sign in using one of the methods below:" %}</h2>
 		<div id="signin-local">
-			<form name="fauth" action="{{ action }}" method="post" id="bw-username-form" class="auth-form">
+			<form name="fauth" action="{{ action }}" method="post" id="bw-username-form" class="styled-form">
 			  {{ lform.next }}
 			  <fieldset>
 			    <legend>{{ _("Sign in using your SocialBooks account") }}</legend>
-			    <label for="id_username">{{ _("Username") }}</label>{{ lform.username }}
-			    <label id="bw-username-password-label" for="id_password">{{ _("Password") }}</label>{{ lform.password }}
+			    {% with lform as form %}
+			    {% include 'includes/form.html' %}
+			    {% endwith %}
 			    <input type="submit" name="blogin" value="{{ _("Sign in") }}" id="bw-mb-username-submit"/>
 			    <a id="bw-lost-password" href="{{ sendpw_url }}">{{ _("Lost your password?")}}</a>
 			  </fieldset>	
@@ -67,11 +68,17 @@ jQuery(document).ready(function() {
 		</div>	
 		
 		<div id="signin-openid">
-			<form name="fopenid" action="{{ action }}" method="post" id="bw-openid-form" class="auth-form">
+			<form name="fopenid" action="{{ action }}" method="post" id="bw-openid-form" class="styled-form">
 			{{ oidform.next }}
 			<fieldset>
 				<legend>{{ _("Sign in using your OpenID") }}</legend>
-				<label for="id_openid_ul"><img src="{{ MEDIA_URL }}library/openid-logo.png" alt="OpenID" /></label>{{ oidform.openid_url }}
+				<div class="label"><label for="id_openid_ul">
+					<img src="{{ MEDIA_URL }}library/openid-logo.png" alt="OpenID" /></label>
+				</div>
+				<div class="info">
+					{{ oidform.openid_url }}
+					{{ oidform.openid_url.errors }}
+				</div>
 				<input name="bsignin" type="submit" value="{{ _("Sign in with OpenID") }}" id="bw-mb-openid-submit"/> 
 				<a href="#" class="auth-what-is-openid-link">{{ _("What's this?") }}</a>
 			</fieldset>

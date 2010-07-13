@@ -1,4 +1,4 @@
-{% extends "base.html" %}
+{% extends "sidebar.html" %}
 {% load i18n %}
 
 {% block title %}Link your OpenID with an account{% endblock %}
@@ -6,10 +6,10 @@
 <link rel="stylesheet" type="text/css" href="/static/auth.css" ></link>
 {% endblock %}
 
-{% block leftnav %}
+{% block sidebar %}
 <p>{% trans "If you're new to SocialBooks, link your OpenID with a new account. If you're already a SocialBooks member, link it with your existing account." %}</p>
 
-{% endblock leftnav %}
+{% endblock sidebar %}
 
 {% block main %}
 
@@ -40,12 +40,13 @@
 {% endif %}
 
 <div class="bw-login" >
-  <form name="fregister" action="{{ action }}" method="POST">
+  <form name="fregister" action="{{ action }}" method="post" class="styled-form">
     {{ form.next }}
     <fieldset>
       <legend>{% trans "I'm new here" %}</legend>
-      <label for="id_username">{% trans "Username" %}</label>{{ form1.username }}
-      <label for="id_email">{% trans "Email" %}</label>{{ form1.email }}
+      {% with form1 as form %}
+      {% include 'includes/form.html' %}
+      {% endwith %}
       <input type="submit" name="bnewaccount" value="{{ _("Create a new SocialBooks account") }}" />
     </fieldset>
   </form>
@@ -55,12 +56,13 @@
 
 <div class="bw-login">
   <h3></h3>
-  <form name="fverify" action="{{ action }}" method="POST">
+  <form name="fverify" action="{{ action }}" method="post" class="styled-form">
     {{ form.next }}
     <fieldset>
       <legend>{% trans "I already have a SocialBooks account" %}</legend>
-      <label for="id_username">{% trans "Screen name" %}</label>{{ form2.username }}
-      <label for="id_passwordl">{% trans "Password" %}</label>{{ form2.password }}
+      {% with form2 as form %}
+      {% include 'includes/form.html' %}
+      {% endwith %}
       <input type="submit" name="bverify" value="{{ _("Associate with my OpenID") }}" />
     </fieldset>
   </form>

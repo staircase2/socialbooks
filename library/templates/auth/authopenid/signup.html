@@ -65,32 +65,40 @@ jQuery(document).ready(function() {
 	
 	<div id="signup-forms">
 		<div id="signup-local">
-			<p>{% trans "If you're not sure what to do, just fill out this form" %}:</p>
+			<p>{% trans "Sign up using one of the methods below" %}:</p>
 			
-		    <form action="{{ action }}" method="post" accept-charset="utf-8" class="auth-form">	
+		    <form action="{{ action }}" method="post" accept-charset="utf-8" class="styled-form">	
 			<fieldset>
 				<legend>{% trans "Sign up <!-- trans: on SocialBooks itself rather than via OpenID -->" %}</legend>
 				
-				<label for="id_username">{% trans "Username" %}:</label>{{ regform.username }}
-				
-				<label for="id_email">{% trans "Email" %}:</label>{{ regform.email }}
-				<label for="id_password1">{% trans "Password" %}:</label>{{ regform.password1 }}
-				<label for="id_password2">{% trans "Confirm password" %}:</label>{{ regform.password2 }}
-				
+				{% with regform as form %}
+				{% include 'includes/form.html' %}
+				{% endwith %}
+
 				<input type="submit" value="{% trans "Sign up" %}" name="register_local"/>
 			</fieldset>
 			</form>
 		</div>
 	
 		<div id="signup-openid">
-			<p>{% trans "If you have an OpenID, sign up here" %}:</p>
-			<form name="fopenid" action="{{ action_signin }}" method="post" class="auth-form">
+			<!--<p>{% trans "If you have an OpenID, sign up here" %}:</p>-->
+			<form name="fopenid" action="{{ action_signin }}" method="post" class="styled-form">
 				<fieldset>
-					<legend><img src="{{ MEDIA_URL }}library/openid-logo.png" alt="{{ _("Use my OpenID")}}" /></legend>
-					{{ oidform.openid_url }}
+					<legend>{% trans "Sign up with OpenID" %}</legend>
+					<div class="fields">
+						<div class="label">
+							<img src="{{ MEDIA_URL }}library/openid-logo.png" alt="{{ _("Use my OpenID")}}" title="OpenID URL" />
+						</div>
+						<div class="info">
+							{{ oidform.openid_url }}
+							{{ oidform.openid_url.errors }}
+						</div>
+					</div>
 					<input name="bsignin" type="submit" value="{{ _("Sign up with OpenID") }}" />
-					<p style="color:gray">({% trans "If you have a Yahoo account, try typing <em>yahoo.com</em> here." %})</p>
-					<a href="#openid" class="auth-what-is-openid-link">{% trans "What's this?" %}</a>          
+					<p style="color:gray">
+						({% trans "If you have a Yahoo account, try typing <em>yahoo.com</em> here." %}) <br>
+						<a href="#openid" class="auth-what-is-openid-link">{% trans "What's this?" %}</a>          
+					</p>					
 				</fieldset>
 			</form>
 			</div>

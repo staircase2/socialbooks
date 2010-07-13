@@ -45,6 +45,7 @@ from django.contrib.sites.models import Site
 from django.utils.http import urlquote_plus
 from django.core.mail import send_mail
 from django.views.decorators.cache import cache_page, cache_control, never_cache
+from django.contrib import messages
 
 from socialbooks.library.models import UserPref
 
@@ -395,8 +396,8 @@ def signin_failure(request, message):
 
     return render('authopenid/signin.html', {
         'msg': message,
-        'form1': form_auth,
-        'form2': form_signin,
+        'lform': form_auth,
+        'oidform': form_signin,
     }, context_instance=RequestContext(request))
 
 @not_authenticated
@@ -472,7 +473,9 @@ def signout(request, msg=None):
     if not is_valid_next_url(next):
         next = '/'
     if msg:
-        next = next + '?msg=' + urlquote_plus(msg)
+        #next = next + '?msg=' + urlquote_plus(msg)
+        messages.info(request, msg)
+        
     logout(request)
     
     return HttpResponseRedirect(next)
