@@ -1,37 +1,8 @@
-#signup p {
-	margin-bottom: 5px;
-}
 
 #signup-about {
 	color:gray;
 	font-size: 22px;
 	margin-bottom: 20px;
-}
-
-
-.auth-form input { 
-	display:block;
-	margin: 0em 1em 1em 1em;
-}
-
-.auth-form label {
-	font-weight: bold;
-	color: #5F5B4B;
-	font-size: larger;
-}
-
-.auth-form legend {
-	color: #5F5B4B;
-	font-weight:bold;
-	font-size:large;
-}
-
-
-.auth-form fieldset {
-	border-radius: 10px;
-	-moz-border-radius: 10px;
-	border: 2px solid rgb(200,200,200) ;
-	padding: 15px;
 }
 
 
