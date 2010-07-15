@@ -75,14 +75,14 @@ jQuery(document).ready(function() {
 				{% include 'includes/form.html' %}
 				{% endwith %}
 
-				<input type="submit" value="{% trans "Sign up" %}" name="register_local"/>
+				<input type="submit" value="{% trans "Sign up" %}" name="blocal"/>
 			</fieldset>
 			</form>
 		</div>
 	
 		<div id="signup-openid">
 			<!--<p>{% trans "If you have an OpenID, sign up here" %}:</p>-->
-			<form name="fopenid" action="{{ action_signin }}" method="post" class="styled-form">
+			<form name="fopenid" action="{{ action }}" method="post" class="styled-form">
 				<fieldset>
 					<legend>{% trans "Sign up with OpenID" %}</legend>
 					<div class="fields">
