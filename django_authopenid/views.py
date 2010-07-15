@@ -94,31 +94,32 @@ def is_valid_next_url(next):
     # to being a local path, not a complete URL.
     return bool(next_url_re.match(next))
 
-def ask_openid(request, openid_url, redirect_to, on_failure=None,
-        sreg_request=None):
-    """ basic function to ask openid and return response """
-
-    on_failure = on_failure or signin_failure
-    
-    trust_root = getattr(
-        settings, 'OPENID_TRUST_ROOT', get_url_host(request) + '/'
-    )
-    if xri.identifierScheme(openid_url) == 'XRI' and getattr(
-            settings, 'OPENID_DISALLOW_INAMES', False
-    ):
-        msg = _("i-names are not supported")
-        return on_failure(request, msg)
-    consumer = Consumer(request.session, DjangoOpenIDStore())
-    try:
-        auth_request = consumer.begin(openid_url)
-    except DiscoveryFailure:
-        msg = _("The password or OpenID was invalid")
-        return on_failure(request, msg)
-
-    if sreg_request:
-        auth_request.addExtension(sreg_request)
-    redirect_url = auth_request.redirectURL(trust_root, redirect_to)
-    return HttpResponseRedirect(redirect_url)
+#
+#def ask_openid(request, openid_url, redirect_to, on_failure=None,
+#		sreg_request=None):
+#	""" basic function to ask openid and return response """
+#
+#	on_failure = on_failure or signin_failure
+#	
+#	trust_root = getattr(
+#		settings, 'OPENID_TRUST_ROOT', get_url_host(request) + '/'
+#	)
+#	if xri.identifierScheme(openid_url) == 'XRI' and getattr(
+#			settings, 'OPENID_DISALLOW_INAMES', False
+#	):
+#		msg = _("i-names are not supported")
+#		return on_failure(request, msg)
+#	consumer = Consumer(request.session, DjangoOpenIDStore())
+#	try:
+#		auth_request = consumer.begin(openid_url)
+#	except DiscoveryFailure:
+#		msg = _("The password or OpenID was invalid")
+#		return on_failure(request, msg)
+#
+#	if sreg_request:
+#		auth_request.addExtension(sreg_request)
+#	redirect_url = auth_request.redirectURL(trust_root, redirect_to)
+#	return HttpResponseRedirect(redirect_url)
 
 def complete(request, on_success=None, on_failure=None, return_to=None):
     """ complete openid signin """
@@ -181,69 +182,65 @@ def not_authenticated(func):
 @not_authenticated
 @never_cache
 def signin(request):
-    """
-    signin page. It manage the legacy authentification (user/password) 
-    and authentification with openid.
+	"""
+	signin page. It manage the legacy authentification (user/password) 
+	and authentification with openid.
 
-    url: /signin/
-    
-    template : authopenid/signin.htm
-    """
+	url: /signin/
+	
+	template : authopenid/signin.htm
+	"""
 
-    on_failure = signin_failure
-    next = ''
-
-
-    if request.GET.get('next') and is_valid_next_url(request.GET['next']):
-        next = request.GET.get('next', '').strip()
-    if not next or not is_valid_next_url(next):
-        next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
-
-    form_signin = OpenidSigninForm(initial={'next':next})
-    form_auth = OpenidAuthForm(initial={'next':next})
-
-    if request.POST:   
-        if 'bsignin' in request.POST.keys():
-            form_signin = OpenidSigninForm(request.POST)
-            if form_signin.is_valid():
-                next = form_signin.cleaned_data['next']
-                if not next:
-                    next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
-
-                sreg_req = sreg.SRegRequest(optional=['nickname', 'email', 'language', 'country', 'timezone', 'fullname'])
-                redirect_to = "%s%s?%s" % (
-                        get_url_host(request),
-                        reverse('user_complete_signin'), 
-                        urllib.urlencode({'next':next})
-                )
-
-                return ask_openid(request, 
-                        form_signin.cleaned_data['openid_url'], 
-                        redirect_to, 
-                        on_failure=signin_failure, 
-                        sreg_request=sreg_req)
-
-        elif 'blogin' in request.POST.keys():
-            # perform normal django authentification
-            form_auth = OpenidAuthForm(request.POST)
-            if form_auth.is_valid():
-                user_ = form_auth.get_user()
-                login(request, user_)
-
-                next = form_auth.cleaned_data['next']
-                if not next:
-                    next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
-                return HttpResponseRedirect(next)
+	on_failure = signin_failure
+	next = ''
 
 
-    return render('authopenid/signin.html', {
-        'lform': form_auth,
-        'oidform': form_signin,
-        'action': request.path,
-        'msg':  request.GET.get('msg',''),
-        'signin_page': True,
-        'sendpw_url': reverse('user_sendpw'),
-    }, context_instance=RequestContext(request))
+	if request.GET.get('next') and is_valid_next_url(request.GET['next']):
+		next = request.GET.get('next', '').strip()
+	if not next or not is_valid_next_url(next):
+		next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
+
+	form_signin = OpenidSigninForm(request, initial={'next':next})
+	form_auth = OpenidAuthForm(initial={'next':next})
+
+	if request.POST:   
+		if 'bsignin' in request.POST.keys():
+			form_signin = OpenidSigninForm(request, request.POST)
+			if form_signin.is_valid():
+				next = form_signin.cleaned_data['next']
+				if not next:
+					next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
+				
+				sreg_req = sreg.SRegRequest(optional=['nickname', 'email', 'language', 'country', 'timezone', 'fullname'])
+				redirect_to = "%s%s?%s" % (
+						get_url_host(request),
+						reverse('user_complete_signin'), 
+						urllib.urlencode({'next':next})
+				)
+				
+				return HttpResponseRedirect(form_signin.get_sreg_redirect(sreg_req, redirect_to))
+
+		elif 'blogin' in request.POST.keys():
+			# perform normal django authentification
+			form_auth = OpenidAuthForm(request.POST)
+			if form_auth.is_valid():
+				user_ = form_auth.get_user()
+				login(request, user_)
+
+				next = form_auth.cleaned_data['next']
+				if not next:
+					next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
+				return HttpResponseRedirect(next)
+
+
+	return render('authopenid/signin.html', {
+		'lform': form_auth,
+		'oidform': form_signin,
+		'action': request.path,
+		'msg':	request.GET.get('msg',''),
+		'signin_page': True,
+		'sendpw_url': reverse('user_sendpw'),
+	}, context_instance=RequestContext(request))
 
 def complete_signin(request):
     """ in case of complete signin with openid """
@@ -403,60 +400,81 @@ def signin_failure(request, message):
 @not_authenticated
 @never_cache
 def signup(request):
-    """
-    signup page. Create a legacy account
+	"""
+	signup page. Create a legacy account
 
-    url : /signup/"
+	url : /signup/"
 
-    templates: authopenid/signup.html, authopenid/confirm_email.txt
-    """
-    action_signin = reverse('user_signin')
+	templates: authopenid/signup.html, authopenid/confirm_email.txt
+	"""
+	action_signin = reverse('user_signin')
 
-    next = request.GET.get('next', '')
-    if not next or not is_valid_next_url(next):
-        next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
+	next = request.GET.get('next', '')
+	if not next or not is_valid_next_url(next):
+		next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
 
-    form = RegistrationForm(initial={'next':next})
-    form_signin = OpenidSigninForm(initial={'next':next})
-    
-    if request.POST:
-        form = RegistrationForm(request.POST)
-        if form.is_valid():
-
-            next = form.cleaned_data.get('next', '')
-            if not next or not is_valid_next_url(next):
-                next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
-
-            user_ = User.objects.create_user( form.cleaned_data['username'],
-                    form.cleaned_data['email'], form.cleaned_data['password1'])
-           
-            user_.backend = "django.contrib.auth.backends.ModelBackend"
-            login(request, user_)
-            
-            # send email
-            current_domain = Site.objects.get_current().domain
-            subject = _("Welcome")
-            message_template = loader.get_template(
-                    'authopenid/confirm_email.txt'
-            )
-            message_context = Context({ 
-                'site_url': 'http://%s/' % current_domain,
-                'username': form.cleaned_data['username'],
-                'password': form.cleaned_data['password1'] 
-            })
-            message = message_template.render(message_context)
-            if not settings.DEBUG:
-                send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, 
-                          [user_.email])
-            
-            return HttpResponseRedirect(next)
-    
-    return render('authopenid/signup.html', {
-        'regform': form,
-        'oidform': form_signin,
-        'action': request.path,
-        'action_signin': action_signin,
-        }, context_instance=RequestContext(request))
+	form = RegistrationForm(initial={'next':next})
+	form_signin = OpenidSigninForm(initial={'next':next})
+	
+	if request.POST:
+		if 'blocal' in request.POST.keys():
+			form = RegistrationForm(request.POST)
+			if form.is_valid():
+	
+				next = form.cleaned_data.get('next', '')
+				if not next or not is_valid_next_url(next):
+					next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
+	
+				user_ = User.objects.create_user( form.cleaned_data['username'],
+						form.cleaned_data['email'], form.cleaned_data['password1'])
+			   
+				user_.backend = "django.contrib.auth.backends.ModelBackend"
+				login(request, user_)
+				
+				# send email
+				current_domain = Site.objects.get_current().domain
+				subject = _("Welcome")
+				message_template = loader.get_template(
+						'authopenid/confirm_email.txt'
+				)
+				message_context = Context({ 
+					'site_url': 'http://%s/' % current_domain,
+					'username': form.cleaned_data['username'],
+					'password': form.cleaned_data['password1'] 
+				})
+				message = message_template.render(message_context)
+				if not settings.DEBUG:
+					send_mail(subject, message, settings.DEFAULT_FROM_EMAIL, 
+							  [user_.email])
+				
+				return HttpResponseRedirect(next)
+		
+		elif 'bsignin' in request.POST.keys(): 
+			# This chunk of code is repeated in signin() above
+			# We can either leave this here, or refactor it to one access path as it was previously, 
+			# but that would mean jumping all around the place (in views.py) just to trace the execution path.
+			# So I'm inclined to have some duplicated code, but have a clearer execution path
+			form_signin = OpenidSigninForm(request, request.POST)
+			if form_signin.is_valid():
+				next = form_signin.cleaned_data['next']
+				if not next:
+					next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
+				
+				sreg_req = sreg.SRegRequest(optional=['nickname', 'email', 'language', 'country', 'timezone', 'fullname'])
+				redirect_to = "%s%s?%s" % (
+						get_url_host(request),
+						reverse('user_complete_signin'), 
+						urllib.urlencode({'next':next})
+				)
+				
+				return HttpResponseRedirect(form_signin.get_sreg_redirect(sreg_req, redirect_to))			
+	
+	return render('authopenid/signup.html', {
+		'regform': form,
+		'oidform': form_signin,
+		'action': request.path,
+		'action_signin': action_signin,
+		}, context_instance=RequestContext(request))
 
 @login_required
 def signout(request, msg=None):
@@ -619,45 +637,48 @@ def emailopenid_failure(request, message):
 @login_required
 @never_cache
 def changeopenid(request):
-    """
-    change openid view. Allow user to change openid 
-    associated to its username.
+	"""
+	change openid view. Allow user to change openid 
+	associated to its username.
 
-    url : /changeopenid/
+	url : /changeopenid/
 
-    template: authopenid/changeopenid.html
-    """
+	template: authopenid/changeopenid.html
+	"""
 
-    extension_args = {}
-    openid_url = ''
-    has_openid = True
-    msg = request.GET.get('msg', '')
-        
-    user_ = request.user
+	extension_args = {}
+	openid_url = ''
+	has_openid = True
+	msg = request.GET.get('msg', '')
+		
+	user_ = request.user
 
-    try:
-        uopenid = UserAssociation.objects.get(user=user_)
-        openid_url = uopenid.openid_url
-    except:
-        has_openid = False
-    
-    redirect_to = get_url_host(request) + reverse('user_changeopenid')
-    if request.POST and has_openid:
-        form = ChangeopenidForm(request.POST, user=user_)
-        if form.is_valid():
-            return ask_openid(request, form.cleaned_data['openid_url'],
-                    redirect_to, on_failure=changeopenid_failure)
-    elif not request.POST and has_openid:
-        if 'openid.mode' in request.GET:
-            return complete(request, changeopenid_success,
-                    changeopenid_failure, redirect_to)    
+	try:
+		uopenid = UserAssociation.objects.get(user=user_)
+		openid_url = uopenid.openid_url
+	except:
+		has_openid = False
+	
+	form = ChangeopenidForm(request, initial={'openid_url': openid_url }, user=user_)
+	
+	redirect_to = get_url_host(request) + reverse('user_changeopenid')
+	if request.POST and has_openid:
+		form = ChangeopenidForm(request, request.POST, user=user_)
+		if form.is_valid():
+			return HttpResponseRedirect(redirect_to)
+			#return ask_openid(request, form.cleaned_data['openid_url'],
+			#		redirect_to, on_failure=changeopenid_failure)
+			
+	elif not request.POST and has_openid:
+		if 'openid.mode' in request.GET:
+			return complete(request, changeopenid_success,
+					changeopenid_failure, redirect_to)	  
 
-    form = ChangeopenidForm(initial={'openid_url': openid_url }, user=user_)
-    return render('authopenid/changeopenid.html', {
-        'form': form,
-        'has_openid': has_openid, 
-        'msg': msg 
-        }, context_instance=RequestContext(request))
+	return render('authopenid/changeopenid.html', {
+		'form': form,
+		'has_openid': has_openid, 
+		'msg': msg 
+		}, context_instance=RequestContext(request))
 
 def changeopenid_success(request, identity_url, openid_response):
     openid_ = from_openid_response(openid_response)

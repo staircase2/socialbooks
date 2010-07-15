@@ -35,6 +35,13 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate
 from django.utils.translation import ugettext as _
 from django.conf import settings
+from django.utils.html import escape
+from django.http import get_host
+
+from openid.consumer.consumer import Consumer
+from openid.consumer.discover import DiscoveryFailure
+
+from util import OpenID, DjangoOpenIDStore
 
 import re
 #import logging
@@ -50,35 +57,103 @@ __all__ = ['OpenidSigninForm', 'OpenidAuthForm', 'OpenidVerifyForm',
         'OpenidRegisterForm', 'RegistrationForm', 'ChangepwForm',
         'ChangeemailForm', 'EmailPasswordForm', 'DeleteForm',
         'ChangeOpenidForm', 'ChangeEmailForm', 'ChangepwForm']
+		
+		
+def get_url_host(request):
+	if request.is_secure():
+		protocol = 'https'
+	else:
+		protocol = 'http'
+	host = escape(get_host(request))
+	return '%s://%s' % (protocol, host)
+
+def get_full_url(request):
+	if request.is_secure():
+		protocol = 'https'
+	else:
+		protocol = 'http'
+	host = escape(request.META['HTTP_HOST'])
+	return get_url_host(request) + request.get_full_path()
+
+next_url_re = re.compile('^/[-\w/]+$')
+
+def is_valid_next_url(next):
+	# When we allow this:
+	#	/openid/?next=/welcome/
+	# For security reasons we want to restrict the next= bit 
+	# to being a local path, not a complete URL.
+	return bool(next_url_re.match(next))
+
+def ask_openid(request, openid_url):
+	""" basic function to ask openid and return response """
+
+	if xri.identifierScheme(openid_url) == 'XRI' and getattr(
+			settings, 'OPENID_DISALLOW_INAMES', False
+	):
+		#msg = _("i-names are not supported")
+		raise forms.ValidationError(_("i-names are not supported"))
+		#return on_failure(request, msg)
+		
+	consumer = Consumer(request.session, DjangoOpenIDStore())
+	try:
+		auth_request = consumer.begin(openid_url)
+		return auth_request
+	except DiscoveryFailure:
+		#msg = _("The password or OpenID was invalid")
+		raise forms.ValidationError(_("The password or OpenID is invalid"))
+		#return on_failure(request, msg)
+
+	#return HttpResponseRedirect(redirect_url)
+	return False
+
 
 class OpenidSigninForm(forms.Form):
-    """ signin form """
-    openid_url = forms.CharField(max_length=255, 
-            widget=forms.widgets.TextInput(attrs={'class': 'required openid',
-                                                  'autocorrect': 'off',
-                                                  'autocapitalize':'off'}))
-    next = forms.CharField(max_length=255, widget=forms.HiddenInput(), 
-            required=False)
+	""" signin form """
+	
+	def __init__(self, request=None, *args, **kwargs):
+		self.request = request
+		super(OpenidSigninForm, self).__init__(*args, **kwargs)
+	
+	openid_url = forms.CharField(max_length=255, 
+			widget=forms.widgets.TextInput(attrs={'class': 'required openid',
+												   'autocorrect': 'off',
+												   'autocapitalize':'off'}))
+	next = forms.CharField(max_length=255, widget=forms.HiddenInput(), 
+			 required=False)
 
-    def clean_openid_url(self):
-        """ test if openid is accepted """
-        if 'openid_url' in self.cleaned_data:
-            openid_url = self.cleaned_data['openid_url']
-            if xri.identifierScheme(openid_url) == 'XRI' and getattr(
-                settings, 'OPENID_DISALLOW_INAMES', False
-                ):
-                raise forms.ValidationError(_('i-names are not supported'))
-            return self.cleaned_data['openid_url']
+	def clean_openid_url(self):
+		""" test if openid is accepted """
+		if 'openid_url' in self.cleaned_data:
+			openid_url = self.cleaned_data['openid_url']
+			
+			try:
+				self.openid_auth_request = ask_openid(self.request, self.cleaned_data['openid_url'])
+				return self.cleaned_data['openid_url']
+			except forms.ValidationError as e:
+				raise e	
+				#pass # ask_open() should raise a ValidationError if OpenID is invalid
 
-    def clean_next(self):
-        """ validate next """
-        if 'next' in self.cleaned_data and self.cleaned_data['next'] != "":
-            next_url_re = re.compile('^/[-\w/]*$')
-            if not next_url_re.match(self.cleaned_data['next']):
-                raise forms.ValidationError(_('next url "%s" is invalid' % 
-                    self.cleaned_data['next']))
-            return self.cleaned_data['next']
 
+	def clean_next(self):
+		""" validate next """
+		if 'next' in self.cleaned_data and self.cleaned_data['next'] != "":
+			next_url_re = re.compile('^/[-\w/]*$')
+			if not next_url_re.match(self.cleaned_data['next']):
+				raise forms.ValidationError(_('next url "%s" is invalid' % 
+					self.cleaned_data['next']))
+			return self.cleaned_data['next']
+
+
+	def get_sreg_redirect(self, sreg_req, redirect_to):
+		trust_root = getattr(
+			settings, 'OPENID_TRUST_ROOT', get_url_host(self.request) + '/'
+		)
+
+		self.openid_auth_request.addExtension(sreg_req)
+		redirect_url = self.openid_auth_request.redirectURL(trust_root, redirect_to)
+
+		return redirect_url
+		
 
 attrs_dict = { 'class': 'required login',
                'autocorrect':'off',
@@ -351,15 +426,26 @@ class ChangeemailForm(forms.Form):
         return self.cleaned_data['password']
                 
 class ChangeopenidForm(forms.Form):
-    """ change openid form """
-    openid_url = forms.CharField(max_length=255,
-            widget=forms.TextInput(attrs={'class': "required" }))
+	""" change openid form """
+	openid_url = forms.CharField(max_length=255,
+			widget=forms.TextInput(attrs={'class': "required" }), label=_("OpenID URL"))
 
-    def __init__(self, data=None, user=None, *args, **kwargs):
-        if user is None:
-            raise TypeError("Keyword argument 'user' must be supplied")
-        super(ChangeopenidForm, self).__init__(data, *args, **kwargs)
-        self.user = user
+	def __init__(self, request, data=None, user=None, *args, **kwargs):
+		if user is None:
+			raise TypeError("Keyword argument 'user' must be supplied")
+		super(ChangeopenidForm, self).__init__(data, *args, **kwargs)
+		self.user = user
+		self.request = request
+		
+	
+	def clean_openid_url(self):
+		"""validate the openid_url field"""	
+		if 'openid_url' in self.cleaned_data:
+			try:
+				self.openid_auth_request = ask_openid(self.request, self.cleaned_data['openid_url'])
+				return self.cleaned_data['openid_url']
+			except forms.ValidationError as e:
+				raise e	
 
 class DeleteForm(forms.Form):
     """ confirm form to delete an account """
