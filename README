@@ -16,7 +16,7 @@ Via easy_install:
   * python-openid (2.x)
   * python-yadis
   * twill
-  * lxml
+  * lxml // Using from Ubuntu repos
   * BeautifulSoup
 
 Via Ubuntu Repos:
@@ -29,7 +29,7 @@ NOTE: setup.py not available as of now. Manually install above packages with pip
 Google up the source tarballs for the below packages, and place it into src/ in your project directory.
 Find the proper source directory (ie. the one with __init__.py), and symlink that into the project directory.
   * minidetector
-  * gdata
+  * gdata //using from easy_install
 
 Submodules
 ==========
@@ -45,15 +45,15 @@ Database
 The first time you get here, manually create the database 
 and user permissions according to values in ./settings.py
 
-create database bookworm default character set = UTF8;
+create database bookworm default character set = UTF8; //wrong statement. Create using phpmyadmin with charset = utf8 and collation = utf8_general
 
 To set local settings, please write the modified values from settings.py in local.py, 
 do not change settings.py. local.py overwrites the default settings.
 
 Then, from the project root:
 
-`python manage.py syncdb`
-`python manage.py test library --settings=test_settings # Sanity check`
+`python manage.py syncdb` //No need to sync superuser creds
+`python manage.py test library --settings=test_settings # Sanity check` //test settings not yet ported from bookworm
 
 You should only need to run syncdb initially, or when the schema changes.
 
@@ -111,4 +111,11 @@ clear-db takes optional arguments:
 Other documentation is in `docs/`
 
 
+////////////
+Setup Django South migrations
 
+./manage.py schemamigration library —initial
+repeat for library, api, mobile, all apps that have models.py
+
+after you've done that repeat with
+./manage.py migrate <appname> 
