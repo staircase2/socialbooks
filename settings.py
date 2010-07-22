@@ -171,7 +171,7 @@ ugettext = lambda s: s
 LOGIN_URL = '/%s%s%s' %  (BASE_URL, ugettext('account/'), ugettext('signin/'))
 
 
-DEFAULT_NUM_RESULTS = 20
+DEFAULT_NUM_RESULTS = 12
 DEFAULT_START_PAGE = 1
 DEFAULT_ORDER_FIELD = 'created_time'
 DEFAULT_ORDER_DIRECTION = 'desc'

@@ -263,6 +263,40 @@ a, a:hover, a:visited {
 }
 
 
+/** Library **/
+
+#library-main {
+	padding-top: 20px;
+}
+
+.library-book {
+	display: inline-block;
+}
+
+.book-image {
+	display: inline-block;
+}
+
+.book-details {
+	display: inline-block;
+	height: inherit;
+	padding-top: 15px;
+	vertical-align: top;
+	width: 10em;
+}
+
+.book-controls {
+	font-size: 0.8em;
+	display: inline-block;
+	vertical-align: bottom;
+}
+
+.book-controls ul li {
+	display: inline-block;
+	list-style-type: none;	
+}
+
+
 /** Footer **/
 
 #footer {
