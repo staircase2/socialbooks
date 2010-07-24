@@ -4,14 +4,12 @@
 	display: inline-block;
 	padding-left: 30px;
 	vertical-align: top;
-	/*width: 17em;*/
-	width: 15%;
+	width: 17em;
 }
 
 #main {
 	display: inline-block;
 	padding-left: 30px;
 	vertical-align: top;
-	/*width: auto;*/
-	width: 80%;
+	width: 70%;
 }
