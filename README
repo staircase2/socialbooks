@@ -1,17 +1,17 @@
 .. -*- mode: rst -*-
 
 ---------------------------
-Bookworm Installation Guide
+SocialBooks Installation Guide
 ---------------------------
 
 Prerequisites
 =============
     
-1. Django svn-trunk release
+1. Django svn-trunk release (current: svn-r13444)
 2. Python 2.5 or 2.6 (virtualenv recommended)
 3. MySQL or other supported database (should be able to override in `local.py`)
 
-Via easy_install:
+Via pip (or easy_install):
   * cssutils
   * python-openid (2.x)
   * python-yadis
@@ -21,15 +21,17 @@ Via easy_install:
 
 Via Ubuntu Repos:
   * django-south
+  * python-lxml
 
 
 Running `setup.py install` will install these packages for you.
 NOTE: setup.py not available as of now. Manually install above packages with pip
 
-Google up the source tarballs for the below packages, and place it into src/ in your project directory.
-Find the proper source directory (ie. the one with __init__.py), and symlink that into the project directory.
+Google up the source tarballs for the below packages, and place it into src/ in your project directory. Create src/ if not present.
+Find the proper source directory (ie. the one with __init__.py) of each download package, and symlink that into the project directory.
   * minidetector
   * gdata //using from easy_install
+
 
 Submodules
 ==========
@@ -37,6 +39,28 @@ Submodules
 Remember to perform the following to initialise the submodules added to this project
   * git submodule init
   * git submodule update
+
+Current submodules:
+  * isbndbpy - http://github.com/ruiwen/isbndbpy
+
+
+
+Setup Django South migrations
+==============================
+
+./manage.py schemamigration library —initial
+repeat for library, api, mobile, all apps that have models.py
+
+./manage.py syncdb
+
+after you've done that repeat with
+./manage.py migrate <appname> 
+
+
+
+
+/**** Ignore from this point onwards ****/
+
 
 
 Database
@@ -110,12 +134,3 @@ clear-db takes optional arguments:
 
 Other documentation is in `docs/`
 
-
-////////////
-Setup Django South migrations
-
-./manage.py schemamigration library —initial
-repeat for library, api, mobile, all apps that have models.py
-
-after you've done that repeat with
-./manage.py migrate <appname> 
