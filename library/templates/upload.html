@@ -1,4 +1,4 @@
-{% extends "base.html" %} 
+{% extends "sidebar.html" %} 
 {% load i18n %}
 
 {% block title %}{{ _("Add a book") }}{% endblock title %}
@@ -15,7 +15,7 @@ li { padding-bottom: .5em; }
 </style>
 {% endblock head %}
 
-{% block leftnav %}
+{% block sidebar %}
 {% url help as helpurl %}
 {% url about as abouturl %}
 {% url CUSTOMER_SERVICE_URL as custserv %}
