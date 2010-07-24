@@ -43,26 +43,6 @@ jQuery(document).ready(function() {
 	{% endblocktrans %}
 	</p>
 
-    {% if form.errors %}
-	<div id="signup-messages">
-	    <p class="auth-message">{% trans "Please correct errors below" %}:</p>
-	    <ul>
-		    {% if form.username.errors %} 
-		    <li><span class="auth-error">{{ form.username.errors|join:", " }}</span></li>
-		    {% endif %}
-		    
-		    {% if form.email.errors %} 
-		    <li><span class="auth-error">{{ form.email.errors|join:", " }}</span></li>
-		    {% endif %}
-		    
-		    {% if form.password2.errors %} 
-		    <li><span class="auth-error">{{ form.password2.errors|join:", " }}</span></li>
-		    {% endif %}
-		</ul>
-	</div>
-	{% endif %}
-	
-	
 	<div id="signup-forms">
 		<div id="signup-local">
 			<p>{% trans "Sign up using one of the methods below" %}:</p>

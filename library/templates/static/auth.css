@@ -1,4 +1,9 @@
 
+#signin, 
+#signup {
+	width: 80%;
+}
+
 #signup-about {
 	color:gray;
 	font-size: 22px;

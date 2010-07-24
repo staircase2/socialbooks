@@ -30,30 +30,15 @@ jQuery(document).ready(function() {
 {% endblock sidebar %}
 
 {% block main %}
-<div id="signin">
-  
-	{% if form.errors %}
-	<div id="signin-messages">
-	    <p class="signin-message">{% trans "Please correct errors below" %}:</p>
-	    <ul>
-		    {% if form.username.errors %} 
-		    <li><span class="auth-error">{{ form.username.errors|join:", " }}</span></li>
-		    {% endif %}
-		    
-		    {% if form.password.errors %} 
-		    <li><span class="auth-error">{{ form.email.errors|join:", " }}</span></li>
-		    {% endif %}
-		    
-		    <p>{{ _("You may have created your account with an OpenID, in which case you won't need your password but should enter your OpenID URL below.") }}</p>
-			<p><strong>{{ _("If you've never created an account, click ‘Sign up’ on the left.") }}</strong></p>
-		</ul>
-	</div>
-	{% endif %}
-  
-	
+<div id="signin">  
 	<div id="signin-forms" class="login"> 
 		<h2>{% trans "Sign in using one of the methods below:" %}</h2>
 		<div id="signin-local">
+			{% if lform.errors %}
+			 <p class="note">{{ _("You may have created your account with an OpenID, in which case you won't need your password but should enter your OpenID URL below.") }}</p>
+			<p class="note"><strong>{{ _("If you've never created an account, click ‘Sign up’ on the left.") }}</strong></p>
+			{% endif %}
+			
 			<form name="fauth" action="{{ action }}" method="post" id="bw-username-form" class="styled-form">
 			  {{ lform.next }}
 			  <fieldset>
