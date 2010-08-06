@@ -1,3 +1,6 @@
 [submodule "isbndbpy"]
 	path = isbndbpy
 	url = git://github.com/ruiwen/isbndbpy.git
+[submodule "library/cyclops"]
+	path = library/cyclops
+	url = ssh://gitomine@git.thoughtmonkeys.com/cyclops.git
