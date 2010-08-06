@@ -19,6 +19,7 @@ from django.views.generic.simple import direct_to_template
 from django.conf import settings
 from django.views.decorators.cache import cache_page, cache_control, never_cache
 from django.views.decorators.vary import vary_on_headers, vary_on_cookie
+from django.contrib import messages
 
 from django_authopenid.views import signin
 
@@ -28,6 +29,7 @@ from socialbooks.library.forms import EpubValidateForm, ProfileForm
 from socialbooks.library.epub import constants as epub_constants
 from socialbooks.library.google_books.search import Request
 from socialbooks.library.epub import epubcheck
+from socialbooks.library import cyclops
 
 log = logging.getLogger('library.views')
 
@@ -193,9 +195,11 @@ publisher that this is a valid ePub book that contains either XHTML or DTBook-fo
 content.''')
 
 
-
+    book = cyclops.resolve_book(document).get_monocle()
+	
     return direct_to_template(request, 'view.html', {'chapter':chapter,
                                             'document':document,
+                                            'book': book,
                                             'next':next,
                                             'message':message,      
                                             'toc':toc,
