@@ -59,7 +59,7 @@
 					
 					<div class="book-controls">
 						<ul>
-							<li class="book-controls-read"><a href="">{% trans "Read"|lower %}</a></li>
+							<li class="book-controls-read"><a href="{% url view d.title d.id %}">{% trans "Read"|lower %}</a></li>
 							<li class="book-controls-comments"><a href="">{% trans "Comments"|lower %}</a></li>
 							<li class="book-controls.clips"><a href="">{% trans "Clips"|lower %}</a></li>
 						</ul>
