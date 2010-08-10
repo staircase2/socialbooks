@@ -9,6 +9,7 @@ from cStringIO import StringIO
 import logging, datetime, os, os.path, hashlib, cssutils, uuid, lxml, lxml.html, shutil
 from urllib import unquote_plus
 from xml.parsers.expat import ExpatError
+import base64
 
 from django.utils.http import urlquote_plus
 from django.db import models
@@ -889,9 +890,24 @@ class HTMLFile(SocialbooksFile):
                         self.stylesheets.add(css[0])
                     else:
                         log.warn("CSS %s was declared in the HTML but no matching StylesheetFile was found" % link.get('href'))
+                                                  
         else:
             log.warn("No <head> found; this could be a malformed document")
         body = self._clean_xhtml(body)
+        
+            
+        # Find all images and embed them as Base64 encoded URIs
+        images = body.getroottree().findall("//img")
+        
+        # Convert them to their Base64-encoded equivalents, then substitute their contents
+        for img in images:
+            src = img.attrib['src']
+            extension = src[-3:]
+            i = ImageFile.objects.get(filename=src)
+            data = base64.b64encode(i.imageblob_set.all()[0].get_data())
+            img.attrib['src'] = "data:image/%s;base64,%s" % (extension, data)
+        
+        
         div = etree.Element('div')
         div.attrib['id'] = 'bw-book-content'
         children = body.getchildren()
