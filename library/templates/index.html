@@ -52,7 +52,7 @@
 				
 				<div class="book-details">
 					<ul>
-						<li class="book-details-title"><h3>{{ d.title }}</h3></li>
+						<li class="book-details-title"><h3><a href="{% url info d.title d.id %}">{{ d.title }}</a></h3></li>
 						<li class="book-details-author"><h4>{{ d.author }}</h4></li>
 						<li class="book-details-publisher"><h5>{{ d.publisher }}</h5></li>
 					</ul>				

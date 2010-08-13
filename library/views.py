@@ -273,6 +273,19 @@ def view_document_metadata(request, title, key):
     form = EpubValidateForm()        
     return direct_to_template(request, 'view.html', {'document':document, 'form': form, 'google_books':google_books})
 
+
+def info(request, title, key):
+    '''Retrieve and display infomation about the requested book'''
+    document = _get_document(request, title, key)
+    cover = document.imagefile_set.filter(filename__startswith='cover') or None
+    
+    if cover:
+        cover_link = "/view/%s/%s/%s" % (document.title, document.id, cover[0].filename)
+    else:
+        cover_link = None
+        
+    return direct_to_template(request, 'info.html', {'document': document, 'cover': cover, "cover_link": cover_link})
+
 @login_required
 def delete(request):
     '''Delete a book and associated metadata, and decrement our total books counter'''

@@ -37,6 +37,9 @@ urlpatterns = patterns('socialbooks.library.views',
 	# CSS file for within a document 
 	url(r'^css/(?P<title>[^/]+)/(?P<key>\d+)/(?P<stylesheet_id>.+)$', 'view_stylesheet', name="view_stylesheet"),
 	
+	# View a books' info page
+	url(r'^info/(?P<title>[^/]+)/(?P<key>\d+)/?$', 'info', name='info'),
+	
 	# Delete a book
 	url(r'^delete/', 'delete', name='delete'),
 	
