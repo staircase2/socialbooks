@@ -903,9 +903,13 @@ class HTMLFile(SocialbooksFile):
         for img in images:
             src = img.attrib['src']
             extension = src[-3:]
-            i = ImageFile.objects.get(filename=src)
-            data = base64.b64encode(i.imageblob_set.all()[0].get_data())
-            img.attrib['src'] = "data:image/%s;base64,%s" % (extension, data)
+            #i = ImageFile.objects.get(filename=src)
+            if not src.startswith("http://"):
+	            i = self.archive.imagefile_set.get(filename=src)
+	            data = base64.b64encode(i.imageblob_set.all()[0].get_data())
+	            img.attrib['src'] = "data:image/%s;base64,%s" % (extension, data)
+			#else:
+			#	# Do we want to download the file and encode it?        
         
         
         div = etree.Element('div')
