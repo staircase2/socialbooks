@@ -1,0 +1,11 @@
+
+/** Styling for Book Info pages **/
+
+#book-info-cover {
+	margin: auto;
+	width: 15em;
+}
+
+#book-info-cover img {
+	width: 100%;
+}

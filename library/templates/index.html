@@ -43,8 +43,8 @@
 		{% for d in page.object_list %}
 			<div class="library-book">
 				<div class="book-image">
-					{% if d.cover %}
-						<img src="" alt="{{ d.title }}" title="{{ d.title }}">
+					{% if d.cover_image %}
+						<img src="{% url view_chapter_image d.title d.id d.cover_image %}" alt="{{ d.title }}" title="{{ d.title }}">
 					{% else %}
 						<img src="{{ MEDIA_URL }}img/book.png" alt="{{ d.title }}" title="{{ d.title }}">
 					{% endif %}

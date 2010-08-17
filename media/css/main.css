@@ -270,10 +270,18 @@ a, a:hover, a:visited {
 
 .library-book {
 	display: inline-block;
+	margin: 15px 10px;
 }
 
 .book-image {
 	display: inline-block;
+	height: 200px;
+	text-align: center;
+	width: 210px;
+}
+
+.book-image img {
+	height: 100%; 
 }
 
 .book-details {
@@ -281,7 +289,7 @@ a, a:hover, a:visited {
 	height: inherit;
 	padding-top: 15px;
 	vertical-align: top;
-	width: 10em;
+	width: 15em;
 }
 
 .book-controls {

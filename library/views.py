@@ -277,14 +277,8 @@ def view_document_metadata(request, title, key):
 def info(request, title, key):
     '''Retrieve and display infomation about the requested book'''
     document = _get_document(request, title, key)
-    cover = document.imagefile_set.filter(filename__startswith='cover') or None
-    
-    if cover:
-        cover_link = "/view/%s/%s/%s" % (document.title, document.id, cover[0].filename)
-    else:
-        cover_link = None
         
-    return direct_to_template(request, 'info.html', {'document': document, 'cover': cover, "cover_link": cover_link})
+    return direct_to_template(request, 'info.html', {'document': document})
 
 @login_required
 def delete(request):

@@ -1,0 +1,99 @@
+{% extends 'sidebar.html' %}
+{% load i18n %}
+
+{% block title %}{{ document.title }} {% trans "Info" %}{% endblock title %}
+
+{% block css %}
+	{{ block.super }}
+	<link href="{{ MEDIA_URL }}css/info.css" media="screen" rel="stylesheet" type="text/css" />
+{% endblock css %}
+
+
+{% block js %}
+	{{ block.super }}
+	
+	<script type="text/javascript">
+		$(window).load(function(){
+			//$('#book-annotations').tabs();
+		})
+	</script>
+{% endblock js %}
+
+{% block sidebar %}
+	<div id="book-info">
+		<div id="book-info-cover">
+			{% if cover_link %}
+				<!-- <img src="{{ cover_link }}" title="{{ document.title }}" alt="{{ document.title }}"> -->
+				<img src="{% url view_chapter_image document.title document.id document.cover_image %}">
+			{% else %}
+				<img src="{{ MEDIA_URL }}img/book.png" title="{{ document.title }}" alt="{{ document.title }}">
+			{% endif %}
+		</div>
+	</div>
+	
+	<div id="book-actions">
+		<ul>
+			<li><a href="{% url view document.title document.id %}">{% trans "read"|lower %}</a></li>
+			<li><a href="{% url download_epub document.title document.id %}">{% trans "download"|lower %}</a></li>
+		</ul>
+
+		<div class="book-actions-delete">
+			<form method="post" action="{% url delete %}">
+				<label for="book-delete-button">{% trans "delete"|lower %}</label><input style="height: 24px; width: 24px;" type="image" value="delete" id="book-delete-button" src="{{ MEDIA_URL }}img/error.png">
+			</form>
+		</div>
+
+	</div>
+	
+{% endblock sidebar %}
+
+{% block main %}
+	{{ request.user.get_profile }}
+
+	<div id="book-info-details">
+		<h1>{{ document.title }}</h1>
+		<h2><a href="">{{ document.author }}</a></h2>
+		{% if document.publisher %}
+			<h3>{{ document.publisher }}</h3>
+		{% endif %}
+		
+		<h2>0{# For now #} {% trans "readers"|lower %}</h2>
+		<h2>0{# For now #} {% trans "comments"|lower %}</h2>
+	</div>
+
+	<div id="book-annotations">
+		<ul>
+			<li href="#book-comments">Comments</li>
+			<li href="#book-clips">Clips</li>
+		</ul>
+		<div id="book-comments">
+			<div id="book-comments-paragraph">
+				Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam, lectus nec laoreet euismod, sapien ipsum vestibulum justo, quis fermentum sem nibh imperdiet ipsum. Vivamus sed lorem id lectus tincidunt congue. Aenean felis nibh, vulputate a varius iaculis, aliquam sit amet leo. Nulla sed dolor nec elit molestie tempus sit amet vel leo. Aliquam luctus tempor justo ac placerat. Morbi vel orci arcu. Morbi eget eros ut ipsum sodales aliquet. Donec dignissim dui non diam scelerisque luctus. Nulla sit amet auctor metus. Phasellus ac lorem nunc. Suspendisse potenti. Mauris rutrum consequat ipsum, eget aliquet erat sollicitudin et. Nulla facilisi. Phasellus eros enim, varius ut congue at, malesuada quis nulla. Duis neque enim, mattis et imperdiet quis, porttitor in nulla.
+			</div>
+			
+			<div id="book-comments-comments">
+				{% for c in comments %}
+					<div class="book-comments-comment">
+						<div class="user-profile-image">
+							{% if request.user.get_profile.profile_image %}
+								<img src="{{ request.user.get_profile.profile_image }}" alt="{{ request.user.get_full_name }}">
+							{% else %}
+								<img src="{{ MEDIA_URL }}/img/default-user.png" alt="{{ request.user.get_full_name }}">
+							{% endif %}
+							<img
+						</div>
+						<div class="book-comments-text">
+							{{ c.text }}
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		</div>
+		
+		<div id="book-clips">
+			Clips?
+		</div>
+		
+	</div>
+
+{% endblock main %}
