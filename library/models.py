@@ -108,6 +108,17 @@ class EpubArchive(SocialbooksModel):
             kwargs['name'] = os.path.basename(kwargs['name'])
         super(EpubArchive, self).__init__(*args, **kwargs)
 
+    
+    @property
+    def cover_image(self):
+        '''Returns the cover image filename (based on a rough heuristic), if one exists'''
+        c = self.imagefile_set.filter(filename__startswith='cover')
+        
+        if c:
+            return c[0].filename
+        else:
+            return None
+
     @property
     def publisher(self):
         '''Returns a displayable list of the publishers'''
