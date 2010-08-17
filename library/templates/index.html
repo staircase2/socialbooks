@@ -52,14 +52,14 @@
 				
 				<div class="book-details">
 					<ul>
-						<li class="book-details-title"><h3><a href="{% url info d.title d.id %}">{{ d.title }}</a></h3></li>
+						<li class="book-details-title"><h3><a href="{% url view d.title d.id %}">{{ d.title }}</a></h3></li>
 						<li class="book-details-author"><h4>{{ d.author }}</h4></li>
 						<li class="book-details-publisher"><h5>{{ d.publisher }}</h5></li>
 					</ul>				
 					
 					<div class="book-controls">
 						<ul>
-							<li class="book-controls-read"><a href="{% url view d.title d.id %}">{% trans "Read"|lower %}</a></li>
+							<li class="book-controls-read"><a href="{% url info d.title d.id %}">{% trans "Info"|lower %}</a></li>
 							<li class="book-controls-comments"><a href="">{% trans "Comments"|lower %}</a></li>
 							<li class="book-controls.clips"><a href="">{% trans "Clips"|lower %}</a></li>
 						</ul>
