@@ -6,9 +6,53 @@ from django.views.generic.simple import direct_to_template
 from django.core.urlresolvers import reverse
 
 from socialbooks.library import models 
-from socialbooks.library.views import download_epub, add_by_url_field, add_data_to_document
+from socialbooks.library.views import download_epub, add_by_url_field, add_data_to_document, download_jsbook
 from socialbooks.api import HttpResponseCreated, SocialbooksHttpResponseNotAcceptable 
 from socialbooks.api.forms import APIUploadForm
+from socialbooks.library import cyclops
+
+import json
+
+@never_cache
+@login_required
+def library(request, select=None):
+	
+	if request.method == 'GET':
+		documents = models.EpubArchive.objects.only('id', 'title', 'orderable_author').filter(user_archive__user=request.user).order_by(settings.DEFAULT_ORDER_FIELD).distinct()
+
+		out = []
+		if select is None:
+			out = [
+				{
+					'id': d.id,
+					'title': d.title,
+					'author': d.orderable_author
+				}
+				for d in documents
+			]
+
+		elif select == 'authors':
+			out = {'authors':
+				[ d.orderable_author for d in documents ]
+			}
+
+		elif select == 'titles':
+			out = {'titles':
+				[ d.title for d in documents ]
+			}
+		else:
+			raise Http404()
+		
+		return HttpResponse(json.dumps(out))	
+		
+	else:
+		return HttpResponseNotAllowed()
+
+@never_cache
+@login_required
+def api_book(request, title, key, nonce=None):
+	return download_jsbook(request, title, key, nonce)
+
 
 @never_cache
 @login_required

@@ -246,6 +246,20 @@ def view_stylesheet(request, title, key, stylesheet_id):
     response = HttpResponse(content=stylesheet.file, content_type='text/css')
     return response
 
+
+@cache_control(private=True)
+def download_jsbook(request, title, key, nonce=None):
+    '''Return the archive wrapped in monocle.'''
+    document = _get_document(request, title, key)
+    
+    if document is None:
+        raise Http404 
+    
+    r = HttpResponse()
+    r['Content-Type'] = 'text/javascript'
+    r.write("squarebook = %s" % cyclops.resolve_book(document).get_monocle())
+    return r
+
 @cache_control(private=True)
 def download_epub(request, title, key, nonce=None):
     '''Return the epub archive content.  If it's accidentally been deleted
