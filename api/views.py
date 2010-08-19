@@ -56,6 +56,19 @@ def api_book(request, title, key, nonce=None):
 	return download_jsbook(request, title, key, nonce)
 
 
+@login_required
+def api_book_meta(request, key):
+	if request.method == 'GET':
+		document = models.EpubArchive.objects.only('id', 'title', 'orderable_author').get(id=key)
+		
+		if document is not None:
+			out = {"id":document.id, "title": document.title, "author": document.orderable_author}
+			response = HttpResponse(json.dumps(out))
+			response['Content-Type'] = 'application/json'
+			return response
+		else:
+			raise Http404
+
 @never_cache
 @login_required
 def main(request, SSL=True):

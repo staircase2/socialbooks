@@ -4,6 +4,7 @@ urlpatterns = patterns('socialbooks.api.views',
                        url(r'^documents/$', 'main', {'SSL':True}, name="main"),
                        url(r'^documents/(?P<epub_id>\d+)/$', 'api_download', {'SSL':True}, name="api_download"),
                        url(r'^library(/?(?P<select>\w+)?)', 'library', name="api_library"),
+                       url(r'^book/meta/(?P<key>\d+)/?', 'api_book_meta', name='api_book_meta'),
                        url(r'^book/(?P<title>[^/]+)/(?P<key>\d+)/?', 'api_book', name='api_book'),
 )			
 
