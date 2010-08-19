@@ -180,7 +180,7 @@ class EpubArchive(SocialbooksModel):
             return ''
         if len(a) == 1:
             return a[0].name
-        return a[0].name + '...'
+        return a[0].name + '…'
 
     def get_subjects(self):
         if self.subjects.count() > 0:
