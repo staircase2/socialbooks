@@ -43,7 +43,9 @@ def library(request, select=None):
 		else:
 			raise Http404()
 		
-		return HttpResponse(json.dumps(out))	
+		response = HttpResponse(json.dumps(out))
+		response['Content-Type'] = 'application/json'
+		return response
 		
 	else:
 		return HttpResponseNotAllowed()
