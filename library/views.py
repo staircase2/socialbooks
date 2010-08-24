@@ -8,7 +8,7 @@ from zipfile import BadZipfile
 from xml.sax.saxutils import escape as xml_escape
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponseRedirect, Http404, HttpResponse
+from django.http import HttpResponseRedirect, Http404, HttpResponse, HttpResponseBadRequest
 from django.shortcuts import get_object_or_404
 from django.core.urlresolvers import reverse
 from django.contrib.auth.forms import UserCreationForm
@@ -24,12 +24,14 @@ from django.contrib import messages
 from django_authopenid.views import signin
 
 from socialbooks.library.epub import InvalidEpubException
-from socialbooks.library.models import EpubArchive, HTMLFile, StylesheetFile, ImageFile, SystemInfo, get_file_by_item, order_fields, DRMEpubException, UserArchive
+from socialbooks.library.models import EpubArchive, HTMLFile, StylesheetFile, ImageFile, SystemInfo, get_file_by_item, order_fields, DRMEpubException, UserArchive, Bookmark
 from socialbooks.library.forms import EpubValidateForm, ProfileForm
 from socialbooks.library.epub import constants as epub_constants
 from socialbooks.library.google_books.search import Request
 from socialbooks.library.epub import epubcheck
 from socialbooks.library import cyclops
+
+import json
 
 log = logging.getLogger('library.views')
 
@@ -313,6 +315,43 @@ def delete(request):
         else:
             raise Http404
     return HttpResponseRedirect(reverse('library'))
+
+
+@login_required
+def user_bookmarks(request, current=False, bookid=None):
+	'''Handles saving/retrieval of user preferences. current is True if this is a regular page-turn place save'''
+	
+	if request.method == 'GET':
+		if bookid is not None:
+			bookmarks = Bookmark.objects.filter(user=request.user).filter(archive__id=bookid)
+			
+			return HttpResponse(json.dumps({"bookmarks": list(bookmarks)}), 'application/json')
+			
+		
+	elif request.method == 'POST':
+
+		# Check that we've got our requisite parameters
+		bookid = request.POST.get('bookid', None)
+		component = request.POST.get('component', None)
+		percentage = request.POST.get('percentage', None)
+
+		if None in [bookid, component, percentage]:
+			return HttpResponseBadRequest() # Fail if we're lacking any of our require parameters
+
+		
+		bookmark = None		
+		if current:
+			bookmark, created = Bookmark.objects.get_or_create(user=request.user, archive=EpubArchive.objects.get(id=bookid), defaults={"component":'', "percentage":'0.0'}, current_read=True)
+		
+		else: # Not a current page bookmark
+			bookmark = Bookmark(user=request.user, archive=EpubArchive.objects.get(id=bookid))
+			
+		
+		bookmark.component = component
+		bookmark.percentage = percentage
+		bookmark.save()
+		
+		return HttpResponse() # Return a positive HTTP 200 response
 
 def register(request):
     '''Register a new user on SocialBooks'''
