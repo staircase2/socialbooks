@@ -31,7 +31,7 @@
 # THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 import logging
 
-from django.http import HttpResponseRedirect, get_host
+from django.http import HttpResponseRedirect, HttpResponse, HttpResponseForbidden, get_host
 from django.shortcuts import render_to_response as render
 from django.template import RequestContext, loader, Context
 from django.conf import settings
@@ -48,6 +48,7 @@ from django.views.decorators.cache import cache_page, cache_control, never_cache
 from django.contrib import messages
 
 from socialbooks.library.models import UserPref
+from socialbooks.api.models import APIKey
 
 from openid.consumer.consumer import Consumer, \
 	SUCCESS, CANCEL, FAILURE, SETUP_NEEDED
@@ -61,7 +62,7 @@ except ImportError:
 
 import re
 import urllib
-
+import json
 
 from util import OpenID, DjangoOpenIDStore, from_openid_response
 from models import UserAssociation, UserPasswordQueue
@@ -229,8 +230,15 @@ def signin(request):
 				next = form_auth.cleaned_data['next']
 				if not next:
 					next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
+					
+				if request.is_ajax():
+					return HttpResponse(json.dumps({'userid':user_.id, 'api_key': APIKey.objects.get(user=user_)}))
+				
 				return HttpResponseRedirect(next)
 
+			else:
+				if request.is_ajax():
+					return HttpResponseForbidden()
 
 	return render('authopenid/signin.html', {
 		'lform': form_auth,
