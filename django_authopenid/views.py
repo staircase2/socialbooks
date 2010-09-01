@@ -232,7 +232,7 @@ def signin(request):
 					next = getattr(settings, 'OPENID_REDIRECT_NEXT', reverse('library'))
 					
 				if request.is_ajax():
-					return HttpResponse(json.dumps({'userid':user_.id, 'api_key': APIKey.objects.get(user=user_)}))
+					return HttpResponse(json.dumps({'userid':user_.id, 'api_key': APIKey.objects.get(user=user_).key}))
 				
 				return HttpResponseRedirect(next)
 
