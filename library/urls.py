@@ -37,7 +37,7 @@ urlpatterns = patterns('socialbooks.library.views',
 	# CSS file for within a document 
 	url(r'^css/(?P<title>[^/]+)/(?P<key>\d+)/(?P<stylesheet_id>.+)$', 'view_stylesheet', name="view_stylesheet"),
 	
-	# View a books' info page
+	# View a book's info page
 	url(r'^info/(?P<title>[^/]+)/(?P<key>\d+)/?$', 'info', name='info'),
 	
 	# Delete a book
@@ -48,6 +48,7 @@ urlpatterns = patterns('socialbooks.library.views',
 	url(r'^download/epub/(?P<title>.+)/(?P<key>\d+)/public/(?P<nonce>[^/]+)?/?$', 'download_epub', name='download_epub_public'),
 
 	# Bookmarks
+	url(r'bookmark/current/(?P<bookid>\d+)/$', 'user_bookmarks', {'current': True}, name='bookmarks_for_book'),
 	url(r'bookmarks/(?P<bookid>\d+)/$', 'user_bookmarks', name='bookmarks_for_book'),
 	url(r'bookmark/current/?', 'user_bookmarks', {'current': True}, name='user_bookmarks'),
 	url(r'bookmark/?', 'user_bookmarks', name='user_bookmark'),
