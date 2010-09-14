@@ -323,33 +323,46 @@ def user_bookmarks(request, current=False, bookid=None):
 	
 	if request.method == 'GET':
 		if bookid is not None:
-			bookmarks = Bookmark.objects.filter(user=request.user).filter(archive__id=bookid)
-			
-			return HttpResponse(json.dumps({"bookmarks": list(bookmarks)}), 'application/json')
-			
+			if current:
+				bookmark = Bookmark.objects.filter(user=request.user).filter(archive__id=bookid).filter(current_read=True)
+				
+				if bookmark:
+					bookmark = bookmark[0] # Get the first result
+				
+					return HttpResponse(json.dumps({'component': bookmark.component, 'percent': unicode(bookmark.percent)}), 'application/json')
+		
+				else:
+					return HttpResponse(json.dumps({}))
+		
+		
+			else:
+				bookmarks = Bookmark.objects.filter(user=request.user).filter(archive__id=bookid)
+				return HttpResponse(json.dumps({"bookmarks": list(bookmarks)}), 'application/json')
+		
+		else:
+			return HttpResponseBadRequest()
 		
 	elif request.method == 'POST':
 
 		# Check that we've got our requisite parameters
 		bookid = request.POST.get('bookid', None)
 		component = request.POST.get('component', None)
-		percentage = request.POST.get('percentage', None)
+		percent = request.POST.get('percent', None)
 
-		if None in [bookid, component, percentage]:
+		if None in [bookid, component, percent]:
 			return HttpResponseBadRequest() # Fail if we're lacking any of our require parameters
 
 		
 		bookmark = None		
 		if current:
-			bookmark, created = Bookmark.objects.get_or_create(user=request.user, archive=EpubArchive.objects.get(id=bookid), defaults={"component":'', "percentage":'0.0'}, current_read=True)
+			bookmark, created = Bookmark.objects.get_or_create(user=request.user, archive=EpubArchive.objects.get(id=bookid), defaults={"component":'', "percent":'0.0'}, current_read=True)
+
+			bookmark.component = component
+			bookmark.percent = percent
+			bookmark.save()
 		
 		else: # Not a current page bookmark
-			bookmark = Bookmark(user=request.user, archive=EpubArchive.objects.get(id=bookid))
-			
-		
-		bookmark.component = component
-		bookmark.percentage = percentage
-		bookmark.save()
+			bookmark = Bookmark(user=request.user, archive=EpubArchive.objects.get(id=bookid), component=component, percent=percent)
 		
 		return HttpResponse() # Return a positive HTTP 200 response
 
