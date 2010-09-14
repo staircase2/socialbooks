@@ -752,11 +752,11 @@ class Bookmark(SocialbooksModel):
 	user = models.ForeignKey(User, related_name='bookmarks')
 	archive = models.ForeignKey(EpubArchive, related_name='archive')
 	component = models.CharField(max_length=255)
-	percentage = models.DecimalField(max_digits=25, decimal_places=24)
+	percent = models.DecimalField(max_digits=25, decimal_places=24)
 	current_read = models.BooleanField()
 	
 	def __unicode__(self):
-		return u'%.3f of %s for %s' % (self.percentage, self.archive.title, self.user.username) 
+		return u'%.3f of %s for %s' % (self.percent, self.component, self.archive.title) 
 
 
 class BookAuthor(SocialbooksModel):
