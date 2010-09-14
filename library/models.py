@@ -936,6 +936,14 @@ class HTMLFile(SocialbooksFile):
 			#	# Do we want to download the file and encode it?        
         
         
+        # Give each <p> in this HTMLFile its own ID
+        # First, the the 'component' id for this html file
+        paragraphs = body.getroottree().findall("//p")
+        component = [ i.id for i in self.archive.get_toc_items() if i.href == self.filename ][0]
+        for idx, p in enumerate(paragraphs):
+        	p.attrib['id'] = "%s-%s" % (component, idx)
+        
+        
         div = etree.Element('div')
         div.attrib['id'] = 'bw-book-content'
         children = body.getchildren()
