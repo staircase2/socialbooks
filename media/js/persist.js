@@ -23,15 +23,6 @@ sqp.save = function(key, data) {
 		if(typeof(data) == 'object') { // Are we dealing with an object?
 
 			return localStorage[key] = JSON.stringify(data);
-
-			/*
-			for(var i in data) {
-							if(/string|number|boolean/.test(typeof(data[i]))) { // Only if typeof(data[i]) is 'string', 'number', or 'boolean'
-								d.push(i + "=" + data[i]); 
-							}
-						}
-						return localStorage[key] = d.join(";"); // Concat the data values, and store them
-			*/
 		}
 		else if(/string|number|boolean/.test(typeof(data))) {
 			return localStorage[key] = data;
@@ -54,17 +45,6 @@ sqp.get = function(key) {
 			catch (err){
 				return res; // Probably a flat string instead of a JSON string
 			}
-			/*
-			var out = {};
-			var r = res.split(";"); // Split the value into its separate parts
-			for(var s in r) {
-				var val = r[s].split('=');
-				console.log(val[0] + " " + val[1])
-				out[val[0]] = val[1];
-			}
-			console.log(out)
-			return out; // Returns a hash of key-value pairs. We leave coercion to the caller to handle
-			*/
 		}
 		else {
 			return res;
