@@ -77,8 +77,8 @@ sqp.send = function(url, data, options) {
 			url: url,
 			type: method,
 			data: data,
-			success: function(data, textStatus, xhr) {
-				if(onsuccess) { console.log("Persist success");
+			success: function(data, textStatus, xhr) { 
+				if(onsuccess) { 
 					onsuccess.call(context || this, data, textStatus, xhr);	
 				}
 			},
