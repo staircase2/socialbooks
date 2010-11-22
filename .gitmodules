@@ -4,6 +4,3 @@
 [submodule "library/cyclops"]
 	path = library/cyclops
 	url = ssh://gitomine@git.thoughtmonkeys.com/cyclops.git
-[submodule "media/js/monocle"]
-	path = media/js/monocle
-	url = ssh://gitomine@git.thoughtmonkeys.com/monocle.git
