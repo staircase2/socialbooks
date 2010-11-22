@@ -9,31 +9,13 @@
 {% endblock css %}
 
 {% block js %}
-	<script src="{{ MEDIA_URL }}js/monocle/dist/monocle-full.js" type="text/javascript"></script>
-	<script src="{{ MEDIA_URL }}js/monocle/src/controls/contents.js" type="text/javascript"></script>
-	<script src="{{ MEDIA_URL }}js/monocle/src/controls/magnifier.js" type="text/javascript"></script>
-	<script src="{{ MEDIA_URL }}js/monocle/src/controls/scrubber.js" type="text/javascript"></script>
-	<script src="{{ MEDIA_URL }}js/monocle/src/controls/placesaver.js" type="text/javascript"></script>
-	<script src="{{ MEDIA_URL }}js/monocle/src/controls/spinner.js" type="text/javascript"></script>
-	<script src="{{ MEDIA_URL }}js/monocle/src/controls/hud.js" type="text/javascript"></script>
-	<script src="{{ MEDIA_URL }}js/monocle/src/monobook.js" type="text/javascript"></script>
 
 	<script type="text/javascript">
 		{% autoescape off %}
 		var bookData = {{ book }}
 		{% endautoescape %}
 		
-		Monocle.addListener(
-			window,
-			'load',
-			function() {
-				monobook = Monobook.Reader('reader', bookData, {flipper: Monocle.Flippers.Scroller});
-			}
-		)
 		
-		//$(document).ready(function() {
-		//	monobook = Monobook.Reader('reader', bookData)
-		//})		
 	</script>
 	
 {% endblock js %}
