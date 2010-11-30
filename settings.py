@@ -106,7 +106,6 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.http.ConditionalGetMiddleware',
     'django.middleware.doc.XViewMiddleware',
     'django_authopenid.middleware.OpenIDMiddleware',
-    'django.middleware.http.SetRemoteAddrFromForwardedFor',
     'django.contrib.flatpages.middleware.FlatpageFallbackMiddleware',
     #'django.middleware.cache.FetchFromCacheMiddleware',
     'socialbooks.minidetector.Middleware',
