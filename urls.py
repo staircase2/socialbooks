@@ -12,7 +12,7 @@ sitemaps = {
 
 urlpatterns = patterns('',
 
-	(r'^%sadmin/(.*)' % settings.BASE_URL,  admin.site.root),
+	(r'^%sadmin/(.*)' % settings.BASE_URL,  include(admin.site.urls)),
 	(r'^%sr/' % settings.BASE_URL, include('django.conf.urls.shortcut')),
 	
 	# Sitemaps
