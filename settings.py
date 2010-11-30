@@ -86,11 +86,11 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 	"django.core.context_processors.media",
 	"django.core.context_processors.request",
 	"django.contrib.messages.context_processors.messages",
-    "socialbooks.library.context_processors.nav",
-    "socialbooks.library.context_processors.mobile",
-    "socialbooks.library.context_processors.local_settings",
-    "socialbooks.library.context_processors.profile",
-    "socialbooks.search.context_processors.search"
+	"socialbooks.library.context_processors.nav",
+	"socialbooks.library.context_processors.mobile",
+	"socialbooks.library.context_processors.local_settings",
+	"socialbooks.library.context_processors.profile",
+	"socialbooks.search.context_processors.search"
 
 )
 
